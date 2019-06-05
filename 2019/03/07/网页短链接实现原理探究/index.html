@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="好奇害死猫,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="如是说" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="事情是这样的，今天一人问我一个问题，但是我懒得在说，就在网上找了一篇博客通过QQ发送给他，但是在发送链接时我发现之前很长的链接变成了短链接，且这个短链接能够正常访问之前的长链接，好奇之下就有了这篇文章． 什么是短链接？我的理解就是通过一定的算法和技术实现将原本很长的网址转换为较短的网址，从而便于用户记忆和在互联网上的传播．常用于有字数约束的微博，二维码等场景． 现在很多公司都提供了短链接服务，比如">
+<meta name="keywords" content="好奇害死猫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网页短链接实现原理探究">
+<meta property="og:url" content="http://mrblog.lishanlei.cn/2019/03/07/网页短链接实现原理探究/index.html">
+<meta property="og:site_name" content="如是说">
+<meta property="og:description" content="事情是这样的，今天一人问我一个问题，但是我懒得在说，就在网上找了一篇博客通过QQ发送给他，但是在发送链接时我发现之前很长的链接变成了短链接，且这个短链接能够正常访问之前的长链接，好奇之下就有了这篇文章． 什么是短链接？我的理解就是通过一定的算法和技术实现将原本很长的网址转换为较短的网址，从而便于用户记忆和在互联网上的传播．常用于有字数约束的微博，二维码等场景． 现在很多公司都提供了短链接服务，比如">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mrblog.lishanlei.cn/2019/03/07/网页短链接实现原理探究/20180930143142269.png">
+<meta property="og:image" content="http://mrblog.lishanlei.cn/2019/03/07/网页短链接实现原理探究/20180930145801286.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:updated_time" content="2019-03-12T21:05:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网页短链接实现原理探究">
+<meta name="twitter:description" content="事情是这样的，今天一人问我一个问题，但是我懒得在说，就在网上找了一篇博客通过QQ发送给他，但是在发送链接时我发现之前很长的链接变成了短链接，且这个短链接能够正常访问之前的长链接，好奇之下就有了这篇文章． 什么是短链接？我的理解就是通过一定的算法和技术实现将原本很长的网址转换为较短的网址，从而便于用户记忆和在互联网上的传播．常用于有字数约束的微博，二维码等场景． 现在很多公司都提供了短链接服务，比如">
+<meta name="twitter:image" content="http://mrblog.lishanlei.cn/2019/03/07/网页短链接实现原理探究/20180930143142269.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mrblog.lishanlei.cn/2019/03/07/网页短链接实现原理探究/">
+
+
+
+
+
+  <title>网页短链接实现原理探究 | 如是说</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f1e627dd369dbb67e095879266fc510";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">如是说</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">李闪磊的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mrblog.lishanlei.cn/2019/03/07/网页短链接实现原理探究/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="如是说">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/28822332.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="如是说">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网页短链接实现原理探究</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i> 评论量
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T13:18:43+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-13T05:05:00+08:00">
+                2019-03-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术性/" itemprop="url" rel="index">
+                    <span itemprop="name">技术性</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i> 评论量
+              </span>
+              
+                <a href="/2019/03/07/网页短链接实现原理探究/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/03/07/网页短链接实现原理探究/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i> 浏览次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>事情是这样的，今天一人问我一个问题，但是我懒得在说，就在网上找了一篇博客通过QQ发送给他，但是在发送链接时我发现之前很长的链接变成了短链接，且这个短链接能够正常访问之前的长链接，好奇之下就有了这篇文章．</p>
+<h3 id="什么是短链接？"><a href="#什么是短链接？" class="headerlink" title="什么是短链接？"></a>什么是短链接？</h3><p>我的理解就是通过一定的算法和技术实现将原本很长的网址转换为较短的网址，从而便于用户记忆和在互联网上的传播．常用于有字数约束的微博，二维码等场景．</p>
+<p>现在很多公司都提供了短链接服务，比如百度，新浪微博等等，以供用户自由方便的生成短链接．</p>
+<p>短链接的大致整体流程</p>
+<p>今天上午我找的原本链接是这个：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://blog.wpjam.com/m/scripts-and-plugins-for-analyzing-website-traffic-stats/</span><br></pre></td></tr></table></figure>
+<p>生成的短链接(长期的话可能会无效)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://url.cn/5r8GoSZ</span><br></pre></td></tr></table></figure>
+<p>大致流程是这样的：我复制(输入)了一个长链接，通过腾讯服务器的转化后得到一个以<a href="http://url.cn" target="_blank" rel="noopener">http://url.cn</a> 开头的短链接，然后我可以将该网址在互联网上进行分享和传播，其他人在访问该短网址可以进入到之前原本长网址对应的页面．</p>
+<p><img src="/2019/03/07/网页短链接实现原理探究/20180930143142269.png" alt="20180930143142269"></p>
+<p> 所以要想将生成短链接，我们需要注意两个问题：</p>
+<ol>
+<li>如何将任意长的字符串转化为较短长或者固定长的字符串．</li>
+<li>如何将短链接还原成之前的长链接，使之能够访问．</li>
+</ol>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><h5 id="Hash实现"><a href="#Hash实现" class="headerlink" title="Hash实现"></a>Hash实现</h5><p>通过一定方式将任意长的文本转化为一个固定长的字符串，只要目标文本长度适当，那么我们对于不同的输入通过哈希几乎(注意是几乎)不可能得到对应同一个字符串．通过对长链接进行Hash运算，将Hash值作为这个长链接的唯一标示．但是通过Hash实现可能会造成碰撞．不一样的长网址缩短成了同一个短网址，那也就做不到复原了．</p>
+<p>对于碰撞问题，有一种缓冲方法就是在呈现碰撞了以后后边在增加随机字符，随机字符的增加能够缓解碰撞的疑问，但是这终究是一种缓冲的办法，没有彻底解决碰撞．</p>
+<h5 id="自增序列算法-永不重复算法"><a href="#自增序列算法-永不重复算法" class="headerlink" title="自增序列算法(永不重复算法)"></a>自增序列算法(永不重复算法)</h5><p>我们可以设置一个自增id，对于每一个新的长链接给他一个不重复的id．</p>
+<p>原理：当服务器接收到一个网址时首先检验这个网址在服务器中是否再存，如果不存在，存储这个新网址并分发一个id，这个id设置成自增，保证了每一个存储的网址的id都是唯一标示．比如上面的，当一个链接过来时，给这个链接发一个0，再有一个链接过来时，给后面这个链接一个1，以此类推．</p>
+<p>数据实现：我们发现短链接后面的参数好像都是定长的，但是如果通过id进行时，参数不定长，且随着id的自增，可能会出现这种情况：url.cn/10000000 . 我们可以将十进制的id转化为多进制，比如在以’0-9a-z’这36个字符表示的36进制中，一亿可以被表示为1njchs，基本实现不重复够用．如果数据量更大，我们可以采用62进制进行转化：</p>
+<p><img src="/2019/03/07/网页短链接实现原理探究/20180930145801286.png" alt="20180930143142269"></p>
+<p>短址的长度一般设为 6 位，而每一位是由 <code>[a - z, A - Z, 0 - 9]</code> 总共 62 个字母组成的，所以 6 位的话，总共会有 62^6 ~= 568亿种组合。</p>
+<p>存储实现：</p>
+<p>对于小型系统，简单的mysql系统的表自增索引即可实现(注意自增id数据类型，int只能到65535)</p>
+<p>大型系统可以搭建分布式key-value系统进行存储．</p>
+<p>我使用mysql简单建了一张表，用于保存长网址的数据，只有两个字段，一个是主键用于保存id，一个url字段用于存放原始的长网址．在进行长网址转换时，先检查数据表中是否存在该长网址，如果存在直接获取该记录的id，否在创建一条新的记录并返回该记录的id，对于这id进行进制转化处理后拼接到准备好的域名后面得到一个对应的短网址返回给用户．</p>
+<p>这里我简单模仿了一个转换短链接的功能：</p>
+<p>url.php：用于模拟数据库存储</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'http://test1.com/12345vn6'</span>,</span><br><span class="line">    <span class="string">'http://test2.com/1234gf56'</span>,</span><br><span class="line">    <span class="string">'http://teat1.com/123ssgg456'</span>,</span><br><span class="line">    <span class="string">'http://test1.com/1234svss56'</span>,</span><br><span class="line">    <span class="string">'http://tefasfd1.com/123456'</span>,</span><br><span class="line">    <span class="string">'http://tesddt1.com/12sss3456'</span>,</span><br><span class="line">    <span class="string">'http://tehghdgst1.com/123dsaf456'</span>,</span><br><span class="line">    <span class="string">'http://tedddst1.com/12SDsd3456'</span>,</span><br><span class="line">    <span class="string">'http://testaa1bb.com/1234ccgfryh56'</span>,</span><br><span class="line">    <span class="string">'http://testaa1dfd.com/1234ccgfryh56'</span>,</span><br><span class="line">    <span class="string">'http://testaa1.com/1234ccgfryh56'</span>,</span><br><span class="line">    <span class="string">'http://testaa1.cssom/1234ccgfryh56'</span>,</span><br><span class="line">    <span class="string">'http://testaa1.com/1234ccgfryh56'</span>,</span><br><span class="line">    <span class="string">'http://testraa1.com/1234ccgfryzh56'</span>,</span><br><span class="line">    <span class="string">'http://teffstaa1.com/1234ccgfsryh56'</span>,</span><br><span class="line">    <span class="string">'http://testaxxa1.com/1234ccgfrsryh56'</span>,</span><br><span class="line">    <span class="string">'http://testaa1ll.com/1234ccgyrfryh56'</span>,</span><br><span class="line">    <span class="string">'http://testaa1.com/1234ccgfryyh56'</span>,</span><br><span class="line">    <span class="string">'http://tesbbtaa1.com/1ss234cjcgfryh56'</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>get.php：用于模拟生成短链接</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./jinzhi.php'</span>;</span><br><span class="line">    $arr = <span class="keyword">include</span>(<span class="string">'./url.php'</span>);</span><br><span class="line"></span><br><span class="line">    $host = <span class="string">'http://url.cn/'</span>;</span><br><span class="line"></span><br><span class="line">    $url = $_SERVER[<span class="string">'HTTP_HOST'</span>] . $_SERVER[<span class="string">'SCRIPT_NAME'</span>];</span><br><span class="line"></span><br><span class="line">    $keyId = in_array($url, $arr) ? array_search($url, $arr) : (array_push($arr, $url) - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    $toKey = get_char($keyId);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> $host . $toKey;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>jinzhi.php：模拟进制转化</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desc</span>  im:十进制数转换成三十六机制数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> (int)$num 十进制数</span></span><br><span class="line"><span class="comment"> * return 返回：三十六进制数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_char</span><span class="params">($num)</span> </span>&#123;</span><br><span class="line">    $num = intval($num);</span><br><span class="line">    <span class="keyword">if</span> ($num &lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    $charArr = <span class="keyword">array</span>(<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>,<span class="string">"4"</span>,<span class="string">"5"</span>,<span class="string">"6"</span>,<span class="string">"7"</span>,<span class="string">"8"</span>,<span class="string">"9"</span>,<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span>, <span class="string">'G'</span>, <span class="string">'H'</span>, <span class="string">'I'</span>, <span class="string">'J'</span>, <span class="string">'K'</span>, <span class="string">'L'</span>, <span class="string">'M'</span>, <span class="string">'N'</span>, <span class="string">'O'</span>, <span class="string">'P'</span>, <span class="string">'Q'</span>, <span class="string">'R'</span>, <span class="string">'S'</span>, <span class="string">'T'</span>, <span class="string">'U'</span>, <span class="string">'V'</span>, <span class="string">'W'</span>, <span class="string">'X'</span>, <span class="string">'Y'</span>, <span class="string">'Z'</span>);</span><br><span class="line">    $char = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        $key = ($num - <span class="number">1</span>) % <span class="number">36</span>;</span><br><span class="line">        $char= $charArr[$key] . $char;</span><br><span class="line">        $num = floor(($num - $key) / <span class="number">36</span>);</span><br><span class="line">    &#125; <span class="keyword">while</span> ($num &gt; <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> $char;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desc</span>  im:三十六进制数转换成十机制数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> (string)$char 三十六进制数</span></span><br><span class="line"><span class="comment"> * return 返回：十进制数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_num</span><span class="params">($char)</span></span>&#123;</span><br><span class="line">	$array=<span class="keyword">array</span>(<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>,<span class="string">"4"</span>,<span class="string">"5"</span>,<span class="string">"6"</span>,<span class="string">"7"</span>,<span class="string">"8"</span>,<span class="string">"9"</span>,<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>,<span class="string">"E"</span>, <span class="string">"F"</span>, <span class="string">"G"</span>, <span class="string">"H"</span>, <span class="string">"I"</span>, <span class="string">"J"</span>, <span class="string">"K"</span>, <span class="string">"L"</span>,<span class="string">"M"</span>, <span class="string">"N"</span>, <span class="string">"O"</span>,<span class="string">"P"</span>, <span class="string">"Q"</span>, <span class="string">"R"</span>, <span class="string">"S"</span>, <span class="string">"T"</span>, <span class="string">"U"</span>, <span class="string">"V"</span>, <span class="string">"W"</span>, <span class="string">"X"</span>, <span class="string">"Y"</span>,<span class="string">"Z"</span>);</span><br><span class="line">	$len=strlen($char);</span><br><span class="line">	<span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;$len;$i++)&#123;</span><br><span class="line">		$index=array_search($char[$i],$array);</span><br><span class="line">		$sum+=($index+<span class="number">1</span>)*pow(<span class="number">36</span>,$len-$i<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> $sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>进行路由请求：<a href="http://localhost:4000/get.php/10000000" target="_blank" rel="noopener">http://localhost:4000/get.php/10000000</a></p>
+<p>输出：<a href="http://url.cn/J" target="_blank" rel="noopener">http://url.cn/J</a></p>
+<p>至于解析短链接跳转至原有链接，只是对上面思路进行取反．</p>
+<h5 id="摘要算法"><a href="#摘要算法" class="headerlink" title="摘要算法"></a>摘要算法</h5><p>实现思路：</p>
+<ol>
+<li>将长网址 <code>md5</code> 生成 32 位签名串,分为 4 段, 每段 8 个字节</li>
+<li>对这四段循环处理, 取 8 个字节, 将他看成 16 进制串与 0x3fffffff(30位1) 与操作, 即超过 30 位的忽略处理</li>
+<li>这 30 位分成 6 段, 每 5 位的数字作为字母表的索引取得特定字符, 依次进行获得 6 位字符串</li>
+<li>总的 <code>md5</code> 串可以获得 4 个 6 位串,取里面的任意一个就可作为这个长 url 的短 url 地址</li>
+</ol>
+<p>这种算法虽然会生成四个短链接，但是存在重复几率．</p>
+<h5 id="算法对比"><a href="#算法对比" class="headerlink" title="算法对比"></a>算法对比</h5><p>采用自增序列的好处就是简单好理解易操作．但是由于id随着增大长度不固定，但是这个问题可以通过让id从指定的数字开始递增即可以解决．还有一个问题就是我们使用的短码是有序的，可能会存在安全方面的问题．当然相关的防护手法也有很多，比如签名验证之类的安全策略；我们也可以自己实现安全手法，比如从一个随机中心值进行开端计数，然后选用一些校检位算法计算出固定位的校检码，将其连接起来，得到固定长不递增的短码．</p>
+<p>第二种算法存在碰撞的问题，虽然产生重复(碰撞)的几率很小．但是也采用这种算法也有一个好处就是短码的位数是固定的，不会从一位到多位．</p>
+<p>所以这两种算法各有千秋，如果事务所需要的短链接有效期较短，那么通过批处理定期清洗，那么用摘要算法也不错．而自增算法能够确保任何恳求量都不会呈现冲突也不失一种非常好的解决算法．</p>
+<h3 id="重定向的问题-301还是302"><a href="#重定向的问题-301还是302" class="headerlink" title="重定向的问题(301还是302)"></a>重定向的问题(301还是302)</h3><p>短链接重定向的执行过程：</p>
+<ol>
+<li>用户访问短链接：<a href="https://dwz.cn/9WnR9Qcx" target="_blank" rel="noopener">https://dwz.cn/9WnR9Qcx</a></li>
+<li>短链接服务器dwz.cn收到请求，根据URL路径<a href="https://dwz.cn/9WnR9Qcx" target="_blank" rel="noopener">9WnR9Qcx</a>获取到原始的长链接：<a href="http://www.lishanlei.cn/" target="_blank" rel="noopener">http://www.lishanlei.cn/</a></li>
+<li>服务器返回状态码，将响应头中的Location设置为：<a href="http://www.lishanlei.cn/" target="_blank" rel="noopener">http://www.lishanlei.cn/</a></li>
+<li>浏览器重新向<a href="http://www.lishanlei.cn/" target="_blank" rel="noopener">http://www.lishanlei.cn/</a>发送请求</li>
+<li>返回响应</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Request URL: https://dwz.cn/9WnR9Qcx</span><br><span class="line">Request Method: GET</span><br><span class="line">Status Code: 302 Found</span><br><span class="line">Remote Address: 220.181.164.108:443</span><br><span class="line">Referrer Policy: no-referrer-when-downgrade</span><br><span class="line"></span><br><span class="line">Access-Control-Allow-Credentials: true</span><br><span class="line">Access-Control-Allow-Headers: Origin,Accept,Content-Type,X-Requested-With</span><br><span class="line">Access-Control-Allow-Methods: POST,GET,PUT,PATCH,DELETE,HEAD</span><br><span class="line">Access-Control-Allow-Origin: </span><br><span class="line">Content-Length: 47</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Date: Wed, 03 Oct 2018 05:42:18 GMT</span><br><span class="line">Location: http://www.lishanlei.cn/</span><br></pre></td></tr></table></figure>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>那么服务器在返回状态码时应该选取301还是302呢？</p>
+<p>301是永久重定向，而302是临时重定向．</p>
+<p>如果选取301，短链接生成以后就不会变化，所以用301符合http语义，这样对服务器的压力会有所减少．但是这样一来，我们就无法统计短地址被点击的次数了．</p>
+<p>而选择302会增加服务器的压力，但是我们可以统计短链接被点击的次数，这些数据可能对于公司的发展规划非常重要．</p>
+<p>综上所述，我认为更好的应该选择302</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+
+
+      </div>
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/my_weixin_gongzhonghao.jpg" alt="如是说 wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/好奇害死猫/" rel="tag"><i class="fa fa-tag"></i> 好奇害死猫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/07/人是一株有思想的芦苇/" rel="next" title="人是一株有思想的芦苇">
+                <i class="fa fa-chevron-left"></i> 人是一株有思想的芦苇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/09/在路上-长安/" rel="prev" title="在路上--长安">
+                在路上--长安 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/28822332.png" alt="如是说">
+            
+              <p class="site-author-name" itemprop="name">如是说</p>
+              <p class="site-description motion-element" itemprop="description">Simple is the best</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/2686685661" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ru-shi-shuo-25-54/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/ca47f67c49c3" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lishanleilixin" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mrzhouxiaofei.com/archives/" title="潜心做事的博客" target="_blank">潜心做事的博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是短链接？"><span class="nav-number">1.</span> <span class="nav-text">什么是短链接？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法实现"><span class="nav-number">2.</span> <span class="nav-text">算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Hash实现"><span class="nav-number">2.0.1.</span> <span class="nav-text">Hash实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自增序列算法-永不重复算法"><span class="nav-number">2.0.2.</span> <span class="nav-text">自增序列算法(永不重复算法)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#摘要算法"><span class="nav-number">2.0.3.</span> <span class="nav-text">摘要算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#算法对比"><span class="nav-number">2.0.4.</span> <span class="nav-text">算法对比</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向的问题-301还是302"><span class="nav-number">3.</span> <span class="nav-text">重定向的问题(301还是302)</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">如是说</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问总量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyu7jHI66';
+      var conf = '371d7822dc6f2fe9a3522aa186267067';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"left","hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"tagMode":false});</script></body>
+</html>

@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="审查,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="如是说" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="做 Code Review 的正反方观点首先，我们先来看看正方的观点：  Code review 中，可以通过大家的建议增进代码的质量。 Code review 是一个传递知识的手段，可以让其它并不熟悉代码的人知道作者的意图和想法，从而可以在以后轻松维护代码。 Code review 鼓励程序员们相互学习对方的长处和优点。 Code review 可以被用来确认自己的设计和实现是清楚和简单的。">
+<meta name="keywords" content="审查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码审查如何做">
+<meta property="og:url" content="http://mrblog.lishanlei.cn/2019/03/07/代码审查如何做/index.html">
+<meta property="og:site_name" content="如是说">
+<meta property="og:description" content="做 Code Review 的正反方观点首先，我们先来看看正方的观点：  Code review 中，可以通过大家的建议增进代码的质量。 Code review 是一个传递知识的手段，可以让其它并不熟悉代码的人知道作者的意图和想法，从而可以在以后轻松维护代码。 Code review 鼓励程序员们相互学习对方的长处和优点。 Code review 可以被用来确认自己的设计和实现是清楚和简单的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-06T21:39:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码审查如何做">
+<meta name="twitter:description" content="做 Code Review 的正反方观点首先，我们先来看看正方的观点：  Code review 中，可以通过大家的建议增进代码的质量。 Code review 是一个传递知识的手段，可以让其它并不熟悉代码的人知道作者的意图和想法，从而可以在以后轻松维护代码。 Code review 鼓励程序员们相互学习对方的长处和优点。 Code review 可以被用来确认自己的设计和实现是清楚和简单的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mrblog.lishanlei.cn/2019/03/07/代码审查如何做/">
+
+
+
+
+
+  <title>代码审查如何做 | 如是说</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f1e627dd369dbb67e095879266fc510";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">如是说</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">李闪磊的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mrblog.lishanlei.cn/2019/03/07/代码审查如何做/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="如是说">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/28822332.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="如是说">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">代码审查如何做</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i> 评论量
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T13:18:00+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-07T05:39:34+08:00">
+                2019-03-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术性/" itemprop="url" rel="index">
+                    <span itemprop="name">技术性</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i> 评论量
+              </span>
+              
+                <a href="/2019/03/07/代码审查如何做/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/03/07/代码审查如何做/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i> 浏览次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="做-Code-Review-的正反方观点"><a href="#做-Code-Review-的正反方观点" class="headerlink" title="做 Code Review 的正反方观点"></a>做 Code Review 的正反方观点</h1><p>首先，我们先来看看正方的观点：</p>
+<ol>
+<li>Code review 中，可以通过大家的建议增进代码的质量。</li>
+<li>Code review 是一个传递知识的手段，可以让其它并不熟悉代码的人知道作者的意图和想法，从而可以在以后轻松维护代码。</li>
+<li>Code review 鼓励程序员们相互学习对方的长处和优点。</li>
+<li>Code review 可以被用来确认自己的设计和实现是清楚和简单的。</li>
+</ol>
+<p>我们再来听下反方的声音:</p>
+<p>很多开发Team抱怨Code Review就是一个形式，费时费力不说，发现的问题还不如测试，而评审者们除了在代码风格上有些见术，别的也就没什么用了，长而久之，大家都会开始厌烦这个事了。</p>
+<p>那么为了这篇文章能够写下去, 笔者显然是属于正方了, 此处不再做争辩.</p>
+<h1 id="Review时-什么该关注-什么不该关注"><a href="#Review时-什么该关注-什么不该关注" class="headerlink" title="Review时, 什么该关注, 什么不该关注"></a>Review时, 什么该关注, 什么不该关注</h1><p>在上面的Code Reivew中的正方观点中，我们没有提到可以帮助找到程序的bug和保证代码风格和编码标准, 那么是说Code Review不能帮助改善这几方面吗? 不是的, 这里确切地说, Code Review不是万能的, 在执行的时候, 应该专注于它应该关注的部分, 那么问题来了, Code Review时, 哪些是该关注的, 哪些又是不该关注的呢?</p>
+<h2 id="Code-Review-时不该关注的"><a href="#Code-Review-时不该关注的" class="headerlink" title="Code Review 时不该关注的"></a>Code Review 时不该关注的</h2><p>首先, 先列几个不该在Code Review时关注的</p>
+<ol>
+<li>Code review <strong>不应该</strong>承担发现代码错误的职责。Code Review主要是审核代码的质量，如可读性，可维护性，以及程序的逻辑和对需求和设计的实现。代码中的bug和错误应该由单元测试，功能测试，性能测试，回归测试来保证的（其中主要是单元测试，因为那是最接近Bug，也是Bug没有扩散的地方）</li>
+<li>Code review <strong>不应该</strong>成为保证代码风格和编码标准的手段。编码风格和代码规范都属于死的东西，每个程序员在把自己的代码提交团队Review的时候，代码就应该是符合规范的，这是默认值，属于每个人自己的事情，不应该交由团队来完成，否则只会浪费大家本来就不够的时间。</li>
+</ol>
+<p><strong>注意: 这里说在Code Review时不该关注, 并不是说不重要, 而是说, 这些部分应该有其他方式(例如自动化工具)去保障, 因为人的成本是最高的, 机器和程序才是便宜的.</strong></p>
+<h2 id="Code-Review-时该关注的"><a href="#Code-Review-时该关注的" class="headerlink" title="Code Review 时该关注的"></a>Code Review 时该关注的</h2><p>代码审查者在审查代码时有非常多的东西需要关注。一个团队需要明确对于自己的项目哪些点是重要的，并不断在审查中就这些点进行检查。</p>
+<h3 id="1-体系结构和代码设计"><a href="#1-体系结构和代码设计" class="headerlink" title="1. 体系结构和代码设计"></a><strong>1. 体系结构和代码设计</strong></h3><ul>
+<li>代码复用: 根据“三振法”, 如果代码被复制一次，虽然不喜欢这种方式，但通常没什么问题。但如果再一次被复制，就应该通过提取公共的部分来重构它。</li>
+<li>用更好的代码: 如果在一块混乱的代码做修改，添加几行代码也许更容易，但建议更进一步，用比原来更好的代码。</li>
+<li>潜在的bugs: 是否会引起的其他错误？循环是否以我们期望的方式终止？</li>
+<li>错误处理: 错误确定被优雅的修改？会导致其他错误？如果这样，修改是否有用？</li>
+<li>效率: 如果代码中包含算法，这种算法是否是高效？ 例如，在字典中使用迭代，遍历一个期望的值，这是一种低效的方式。</li>
+<li>新代码与全局的架构是否保持一致？</li>
+<li>基础代码是否有结合使用了一些标准或设计样式，新的代码是否遵循当前的规范？代码是否正确迁移，或参照了因不规范而淘汰的旧代码？</li>
+<li>代码的位置是否正确？比如涉及订单的新代码是否在订单服务相关的位置？</li>
+<li>新代码是否重用了现存的代码？新代码是否可以被现有代码重用？新代码是否有重复代码？如果是的话，是否应该重构成一个更可被重用的模式，还是当前还可以接受？</li>
+<li>新代码是否被过度设计了？是否引入现在还不需要的重用设计？</li>
+</ul>
+<h3 id="2-可读性和可维护性"><a href="#2-可读性和可维护性" class="headerlink" title="2. 可读性和可维护性"></a><strong>2. 可读性和可维护性</strong></h3><ul>
+<li>字段、变量、参数、方法、类的命名是否真实反映它们所代表的事物, 是否能够望文生义?</li>
+<li>是否可以通过读代码理解它做了什么？</li>
+<li>是否理解测试用例测了什么？</li>
+<li>测试是否很好地覆盖了用例的各种情况？它们是否覆盖了正常和异常用例？是否有忽略的情况？</li>
+<li>错误信息是否可被理解？ log打的是否正确和足够?</li>
+<li>不清晰的代码是否被文档、注释或容易理解的测试用例所覆盖？具体可以根据团队自身的喜好决定使用哪种方式。</li>
+</ul>
+<h3 id="3-功能"><a href="#3-功能" class="headerlink" title="3. 功能"></a><strong>3. 功能</strong></h3><ul>
+<li>代码是否真的达到了预期的目标？如果有自动化测试来确保代码的正确性，测试的代码是否真的可以验证代码达到了协定的需求？</li>
+<li>代码看上去是否包含不明显的bug，比如使用错误的变量进行检查，或误把and写成or？</li>
+<li>作者是否需要创建公共文档或修改现存的帮助文档？</li>
+<li>是否检查了面向用户的信息的正确性？</li>
+<li>是否有会在生产环境中导致应用停止运行的明显错误？代码是否会错误地指向测试数据库，是否存在应在真实服务中移除的硬编码的stub代码？</li>
+<li>你对性能的需求是什么，你是否考虑了安全问题？</li>
+</ul>
+<ol>
+<li>这个新增或修复的功能是否会反向影响到现存的性能测试结果</li>
+<li>外部调用很昂贵(a. 数据库调用. b. 不必要的远程调用. c. 移动或穿戴设备过频繁地调用后端程序)</li>
+</ol>
+<h3 id="4-安全"><a href="#4-安全" class="headerlink" title="4. 安全"></a><strong>4. 安全</strong></h3><ul>
+<li>检查是否新的路径和服务需要认证</li>
+<li>数据是否需要加密</li>
+<li>密码是否被很好地控制？</li>
+</ul>
+<blockquote><p>这里的密码包含密码（如用户密码、数据库密码或其他系统的密码）、秘钥、令牌等等。这些永远不应该存放在会提交到源码控制系统的代码或配置文件中，有其他方式管理这些密码，例如通过密码服务器（secret server）。当审查代码时，要确保这些密码不会悄悄进入你的版本控制系统中</p>
+</blockquote>
+<ul>
+<li>代码的运行是否应该被日志记录或监控？是否正确地使用？</li>
+</ul>
+<blockquote><p>日志和监控需求因各个项目而不同，一些需要合规，一些拥有比别人严格的行为、事件日志规范。如果你有规章规定哪些需要记录日志，何时、如何记录，那么作为代码审查者你应该检查提交的代码是否满足要求。如果你没有固定的规章，那么就考虑：</p>
+</blockquote>
+<ul>
+<li>代码是否改变了数据（如增删改操作）？是否应该记录由谁何时改变了什么？</li>
+<li>代码是否涉及关键性能的部分？是否应该在性能监控系统中记录开始时间和结束时间？</li>
+<li>每条日志的日志等级是否恰当？一个好的经验法则是“ERROR”触发一个提示发送到某处，如果你不想这些消息在凌晨3点叫醒谁，那么就将之降级为“INFO”或“DEBUG”。当在循环中或一条数据可能产生多条输出的情况下，一般不需要将它们记录到生产日志文件中，它们更应该被放在“DEBUG”级别。</li>
+</ul>
+<h3 id="5-其他方面"><a href="#5-其他方面" class="headerlink" title="5. 其他方面"></a><strong>5. 其他方面</strong></h3><ul>
+<li>是否合理地释放了资源</li>
+</ul>
+<ol>
+<li>是否存在内存泄漏?</li>
+<li>是否存在内存无限增长? 例如, 如果审查者看到不断有变量被追加到list或map中, 那么就要考虑下这个list或map什么时候失效, 或清除无用数据</li>
+<li>代码是否及时关闭了连接或数据流?</li>
+<li>资源池配置是否是否正确? 有没有过大或者过小?</li>
+</ol>
+<p>异常情况是否能够正确处理?</p>
+<ol>
+<li>超时是否能够正确处理?</li>
+<li>调用接口出错的时候, 是否有出错处理逻辑, 并且处理正确?</li>
+<li>进程意外重启后, 是否能够恢复到崩溃前的环境?</li>
+</ol>
+<p>正确性(主要与多线程环境关系密切)</p>
+<ol>
+<li>代码是否使用了正确的适合多线程的数据结构</li>
+<li>代码是否存在竞态条件（race conditions）？多线程环境中代码非常容易造成不明显的竞态条件。作为审查者，可以查看不是原子操作的get和set</li>
+<li>代码是否正确使用锁？和竞态条件相关，作为审查者你应该检查被审代码是否允许多个线程修改变量导致程序崩溃。代码可能需要同步、锁、原子变量来对代码块进行控制</li>
+<li>代码的性能测试是否有价值？很容易将小型的性能测试代码写得很糟糕，或者使用不能代表生产环境数据的测试数据，这样只会得到错误的结果</li>
+<li>缓存：虽然缓存是一种能防止过多高消耗请求的方式，但其本身也存在一些挑战。如果审查的代码使用了缓存，你应该关注一些常见的问题，如，不正确的缓存失效方式</li>
+</ol>
+<p>代码级优化, 对大部分并不是要构建低延时应用的机构来说，代码级优化往往是过早优化，所以首先要知道代码级优化是否必要</p>
+<ol>
+<li>代码是否在不需要的地方使用同步或锁操作？如果代码始终运行在单线程中，锁往往是不必要的</li>
+<li>代码是否可以使用原子变量替代锁或同步操作？</li>
+<li>代码是否使用了不必要的线程安全的数据结构？比如是否可以使用ArrayList替代Vector？</li>
+<li>代码是否在通用的操作中使用了低性能的数据结构？如在经常需要查找某个特定元素的地方使用链表</li>
+<li>代码是否可以使用懒加载并从中获得性能提升？</li>
+<li>条件判断语句或其他逻辑是否可以将最高效的求值语句放在前面来使其他语句短路？</li>
+<li>代码是否存在许多字符串格式化？是否有方法可以使之更高效？</li>
+<li>日志语句是否使用了字符串格式化？是否先使用条件判断语句校验了日志等级，或使用延迟求值？</li>
+</ol>
+<h1 id="Code-Review-的实际操作建议"><a href="#Code-Review-的实际操作建议" class="headerlink" title="Code Review 的实际操作建议"></a>Code Review 的实际操作建议</h1><ol>
+<li>代码审查是应该在互相沟通中进行讨论的，而不是相互对抗。预先确定哪些是要点哪些不是，可以减少冲突并拟定预期。</li>
+<li>经常进行Code Review, 不要攒了1w行才让同事帮你review, 这是坑队友.</li>
+</ol>
+<blockquote>
+<ul>
+<li>要Review的代码越多，那么要重构，重写的代码就会越多。而越不被程序作者接受的建议也会越多，唾沫口水战也会越多。</li>
+<li>程序员代码写得时候越长，程序员就会在代码中加入越来越多的个人的东西。 程序员最大的问题就是“自负”，无论什么时候，什么情况下，有太多的机会会让这种“自负”澎涨开来，并开始影响团队影响整个项目，以至于听不见别人的建议，从而让Code Review变成了口水战。</li>
+<li>越接近软件发布的最终期限，代码也就不能改得太多。</li>
+</ul>
+</blockquote>
+<p>Code Review不要太正式，而且要短</p>
+<p>尽可能的让不同的人Reivew你的代码(不要超过3个人)</p>
+<blockquote>
+<ul>
+<li>从不同的方向评审代码总是好的。</li>
+<li>会有更多的人帮你在日后维护你的代码。</li>
+<li>这也是一个增加团队凝聚力的方法。</li>
+</ul>
+</blockquote>
+<p>保持积极的正面的态度</p>
+<blockquote>
+<p>无论是代码作者，还是评审者，都需要一种积极向上的正面的态度，作者需要能够虚心接受别人的建议，因为别人的建议是为了让你做得更好；评审者也需要以一种积极的正面的态度向作者提意见，因为那是和你在一个战壕里的战友。记住，你不是一段代码，你是一个人！</p>
+</blockquote>
+<p>学会享受Code Reivew</p>
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><ol>
+<li><a href="https://my.oschina.net/wolx/blog/508549" target="_blank" rel="noopener">Code Review最佳实践</a></li>
+<li><a href="http://coolshell.cn/articles/1302.html" target="_blank" rel="noopener">Code Review中的几个提示</a></li>
+<li><a href="http://www.infoq.com/cn/articles/effective-code-reviews" target="_blank" rel="noopener">如何使代码审查更高效</a></li>
+<li><a href="https://book.douban.com/subject/1951158/" target="_blank" rel="noopener">&lt;&lt;代码大全&gt;&gt;</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+
+
+      </div>
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/my_weixin_gongzhonghao.jpg" alt="如是说 wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/审查/" rel="tag"><i class="fa fa-tag"></i> 审查</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/06/关于本博客/" rel="next" title="关于本博客">
+                <i class="fa fa-chevron-left"></i> 关于本博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/07/人是一株有思想的芦苇/" rel="prev" title="人是一株有思想的芦苇">
+                人是一株有思想的芦苇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/28822332.png" alt="如是说">
+            
+              <p class="site-author-name" itemprop="name">如是说</p>
+              <p class="site-description motion-element" itemprop="description">Simple is the best</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/2686685661" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ru-shi-shuo-25-54/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/ca47f67c49c3" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lishanleilixin" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mrzhouxiaofei.com/archives/" title="潜心做事的博客" target="_blank">潜心做事的博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#做-Code-Review-的正反方观点"><span class="nav-number">1.</span> <span class="nav-text">做 Code Review 的正反方观点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Review时-什么该关注-什么不该关注"><span class="nav-number">2.</span> <span class="nav-text">Review时, 什么该关注, 什么不该关注</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Review-时不该关注的"><span class="nav-number">2.1.</span> <span class="nav-text">Code Review 时不该关注的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Review-时该关注的"><span class="nav-number">2.2.</span> <span class="nav-text">Code Review 时该关注的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-体系结构和代码设计"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 体系结构和代码设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-可读性和可维护性"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 可读性和可维护性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-功能"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-安全"><span class="nav-number">2.2.4.</span> <span class="nav-text">4. 安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-其他方面"><span class="nav-number">2.2.5.</span> <span class="nav-text">5. 其他方面</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Review-的实际操作建议"><span class="nav-number">3.</span> <span class="nav-text">Code Review 的实际操作建议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用"><span class="nav-number">4.</span> <span class="nav-text">引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">如是说</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问总量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyu7jHI66';
+      var conf = '371d7822dc6f2fe9a3522aa186267067';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"left","hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"tagMode":false});</script></body>
+</html>
