@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="如是说" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] 常见的排序算法冒泡排序  两两比较相邻记录的关键字，如果是反序则交换，直到没有反序的记录位置  1234567891011121314151617public static void bubbleSort(int[] arr) &amp;#123;  boolean flag = true;  for(int i = 1; i &amp;lt; arr.length; i ++) &amp;#123;">
+<meta name="keywords" content="面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++和PHP的面试题总结">
+<meta property="og:url" content="http://mrblog.lishanlei.cn/2019/09/22/c-和PHP的面试题总结/index.html">
+<meta property="og:site_name" content="如是说">
+<meta property="og:description" content="[TOC] 常见的排序算法冒泡排序  两两比较相邻记录的关键字，如果是反序则交换，直到没有反序的记录位置  1234567891011121314151617public static void bubbleSort(int[] arr) &amp;#123;  boolean flag = true;  for(int i = 1; i &amp;lt; arr.length; i ++) &amp;#123;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/798267/201601/798267-20160125092645145-1991624700.png">
+<meta property="og:updated_time" content="2019-09-21T16:51:48.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c++和PHP的面试题总结">
+<meta name="twitter:description" content="[TOC] 常见的排序算法冒泡排序  两两比较相邻记录的关键字，如果是反序则交换，直到没有反序的记录位置  1234567891011121314151617public static void bubbleSort(int[] arr) &amp;#123;  boolean flag = true;  for(int i = 1; i &amp;lt; arr.length; i ++) &amp;#123;">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/798267/201601/798267-20160125092645145-1991624700.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mrblog.lishanlei.cn/2019/09/22/c-和PHP的面试题总结/">
+
+
+
+
+
+  <title>c++和PHP的面试题总结 | 如是说</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f1e627dd369dbb67e095879266fc510";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">如是说</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">李闪磊的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mrblog.lishanlei.cn/2019/09/22/c-和PHP的面试题总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="如是说">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/28822332.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="如是说">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">c++和PHP的面试题总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i> 评论量
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-22T00:50:15+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-22T00:51:48+08:00">
+                2019-09-22
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i> 评论量
+              </span>
+              
+                <a href="/2019/09/22/c-和PHP的面试题总结/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/09/22/c-和PHP的面试题总结/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i> 浏览次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </span></div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h2 id="常见的排序算法"><a href="#常见的排序算法" class="headerlink" title="常见的排序算法"></a>常见的排序算法</h2><p>冒泡排序</p>
+<blockquote>
+<p>两两比较相邻记录的关键字，如果是反序则交换，直到没有反序的记录位置</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i ++) &#123;</span><br><span class="line">    flag = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = arr.length - <span class="number">1</span>; j &lt;= i; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(arr[j - <span class="number">1</span>] &gt; arr[j]) &#123;</span><br><span class="line">        swap(arr, j - <span class="number">1</span>, j);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> tmp = arr[i];</span><br><span class="line">  arr[i] = arr[j];</span><br><span class="line">  arr[j] = tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最好时间复杂度：O（n）</p>
+<p>最坏时间复杂度O（$n^2$）</p>
+<p>平均时间复杂度：O（$n^2$）</p>
+<p>空间复杂度：O（1）</p>
+<p>稳定性：稳定</p>
+<p>简单选择排序</p>
+<blockquote>
+<p>通过n - i次关键字之间的比较，从n - i + 1个记录中选出关键字最小的记录，并和第i 个记录交换。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> min;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    min = i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(arr[min] &gt; arr[j]) &#123;</span><br><span class="line">        min = j;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(min != i) &#123;</span><br><span class="line">      swap(arr, i, min);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;		</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> arr, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> tmp = arr[i];</span><br><span class="line">  arr[i] = arr[j];</span><br><span class="line">  arr[j] = tmp; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最好时间复杂度：O（$n^2$）</p>
+<p>最坏时间复杂度：O（$n^2$）</p>
+<p>平均时间复杂度：O（$n^2$）</p>
+<p>空间复杂度：O（1）</p>
+<p>稳定性：不稳定</p>
+<p>直接插入排序</p>
+<blockquote>
+<p>将n个待排序的元素看成一个有序表和无序表，从无序表中取出一个元素将其插入到有序表的指定位置，重复n-1次完成排序</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> j, tmp;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i&lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(arr[i] &lt; arr[i - <span class="number">1</span>]) &#123;</span><br><span class="line">      tmp = arr[i];</span><br><span class="line">      <span class="keyword">for</span>(j = i + <span class="number">1</span>; arr[j] &gt; tmp; j--) &#123;</span><br><span class="line">        arr[j + <span class="number">1</span>] = arr[j];</span><br><span class="line">      &#125;</span><br><span class="line">      arr[j + <span class="number">1</span>] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最优时间复杂度：O（<strong>$n$</strong>）</p>
+<p>最坏时间复杂度：O（$n^2$）</p>
+<p>平均时间复杂度：O（$n^2$）</p>
+<p>空间复杂度：O（1）</p>
+<p>稳定性：稳定</p>
+<p>希尔排序</p>
+<blockquote>
+<p>取一个增量increment作为间隔将带排序列分为increment个子序列，距离increment的元素在同一子序列，对每一个子序列进行<code>直接插入排序</code>，然后缩小增量increment并重复上面操作，直到increment = 1</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> j, tmp, increment = arr.length;</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = increment + <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(arr[i] &lt; arr[i - increment]) &#123;</span><br><span class="line">        tmp = arr[i];</span><br><span class="line">        <span class="keyword">for</span>(j = i - increment; j &gt; <span class="number">0</span> &amp;&amp; arr[j] &gt; tmp; j -= increment) &#123;</span><br><span class="line">          arr[j + increment] = arr[j];</span><br><span class="line">        &#125;</span><br><span class="line">        arr[j + increment] = tmp;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">while</span>(increment &gt; <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最优时间复杂度：O（n）</p>
+<p>最坏时间复杂度：O（<strong>$n^2$</strong>）</p>
+<p>平均时间复杂度：O（$n^{1.3}$）</p>
+<p>空间复杂度：O（1）</p>
+<p>稳定性：不稳定</p>
+<p>归并排序</p>
+<blockquote>
+<p>将初始序列看作是n个有序的子序列，每个子序列的长度为1，然后两两归并，得到n/2个长度为2或1的有序子序列，再次两两归并，直到得到一个长度为n的有序序列为止</p>
+</blockquote>
+<p>递归实现</p>
+<ol>
+<li>从上到下递归</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSortUp2Down</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(arr == <span class="keyword">null</span> || start &gt;= end) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  mergeSortUp2Down(arr, start, mid);</span><br><span class="line">  mergeSortUp2Down(arr, mid + <span class="number">1</span>, end);</span><br><span class="line">  merge(arr, start, mid, end);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> start, <span class="keyword">int</span> mid, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[end - start + <span class="number">1</span>];</span><br><span class="line">  <span class="keyword">int</span> i = start;</span><br><span class="line">  <span class="keyword">int</span> j = mid + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(i &lt;= mid &amp;&amp; j &lt;= end) &#123;</span><br><span class="line">    <span class="keyword">if</span>(arr[i] &lt; arr[j]) &#123;</span><br><span class="line">      temp[k++] = arr[i++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      temp[k++] = arr[j++];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">while</span>(i &lt;= mid) &#123;</span><br><span class="line">    temp[k++] = arr[i++];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">while</span>(j &lt;= end) &#123;</span><br><span class="line">    temp[k++] = arr[j++];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">    arr[start + i] = temp[i];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  temp = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>从下往上递归：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSortDown2Up</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i *= <span class="number">2</span>) &#123;</span><br><span class="line">    mergeGroup(arr, arr.length, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeGroup</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> len, <span class="keyword">int</span> gap)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i;</span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>; i + <span class="number">2</span> * gap - <span class="number">1</span> &lt; len; i += (<span class="number">2</span> * gap)) &#123;</span><br><span class="line">    merge(arr, i, i + gap - <span class="number">1</span>, i + <span class="number">2</span> * gap - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(i + gap - <span class="number">1</span> &lt; len - <span class="number">1</span>) &#123;</span><br><span class="line">    merge(arr, i, i + gap - <span class="number">1</span>, len - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>非递归实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSortNon</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> gap = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i + gap - <span class="number">1</span> &lt; arr.length; i += (<span class="number">2</span> * gap)) &#123;</span><br><span class="line">    <span class="keyword">int</span> start = i, mid = i + gap - <span class="number">1</span>, end = i + <span class="number">2</span> * gap - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(end &gt; arr.length - <span class="number">1</span>) &#123;</span><br><span class="line">      end = arr.length - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    merge(arr, start, mid, end);</span><br><span class="line">  &#125;</span><br><span class="line">  gap *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最优时间复杂度：O（$n\log_2 n$）</p>
+<p>最坏时间复杂度：O（$n\log_2 n$）</p>
+<p>平均时间复杂度：O（$n\log_2 n$）</p>
+<p>空间复杂度：O（n）</p>
+<p>稳定性：稳定</p>
+<p>堆排序</p>
+<blockquote>
+<p>将待排序序列构建成一个大顶堆，将最大值(堆顶)和序列最后一个元素交换，然后对于剩余的n-1个序列重新构成一个堆，重复操作。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">maxHeapSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> len = arr.length - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = len /<span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    maxHeapAdjust(arr, i, len);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = len; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    swap(arr, <span class="number">0</span>, i);</span><br><span class="line">    maxHeapAdjust(arr, <span class="number">0</span>, i - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">maxHeapAdjust</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> s, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i, temp = arr[s];</span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">2</span> * s; i &lt;= m; i *= <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(arr[i + <span class="number">1</span>] &gt; arr[i]) &#123;</span><br><span class="line">      ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(temp &gt;= arr[i]) &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    arr[s] = arr[i];</span><br><span class="line">    s = i;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  arr[s] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最优时间复杂度：O（$n\log_2 n$）</p>
+<p>最坏时间复杂度：O（$n\log_2 n$）</p>
+<p>平均时间复杂度：O（$n\log_2 n$）</p>
+<p>空间复杂度：O（1）</p>
+<p>稳定性：不稳定</p>
+<p>快速排序</p>
+<blockquote>
+<p>从数列中选取一个基数，将比基数小的放在基数前面，比基数大的摆在基数后面，该分区退出后，该基准就处于数列的中间，递归堆基数前子序列和后序列进行上述操作，完成排序</p>
+</blockquote>
+<ol>
+<li>递归操作</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pivot;</span><br><span class="line">  <span class="keyword">if</span>(start &lt; end) &#123;</span><br><span class="line">    pivot = Partition(arr, start, end);</span><br><span class="line">    </span><br><span class="line">    Partition(arr, start, pivot - <span class="number">1</span>);</span><br><span class="line">    Partition(arr, pivot + <span class="number">1</span>, end);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Partition</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pivotkey = arr[start];</span><br><span class="line">  <span class="keyword">while</span>(start &lt; end) &#123;</span><br><span class="line">    <span class="keyword">while</span>((start &lt; end) &amp;&amp; (arr[end] &gt;= pivotkey)) &#123;</span><br><span class="line">      end--;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr, start, end);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>((start &lt; end) &amp;&amp; (arr[start] &lt;= pivotkey)) &#123;</span><br><span class="line">      start++;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr, start, end);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>非递归操作</li>
+</ol>
+<p>用栈来保存边界值(start和end)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quickSortNon</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span>[] stack = <span class="keyword">new</span> <span class="keyword">int</span>[arr.length];</span><br><span class="line">  <span class="keyword">int</span> top = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> end = arr.length - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span> pivok = Partition(arr, start, end);</span><br><span class="line">  <span class="keyword">if</span>(pivot &gt; start + <span class="number">1</span>) &#123;</span><br><span class="line">    stack[top++] = start;</span><br><span class="line">    stack[top++] = pivok - <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(pivok &lt; end - <span class="number">1</span>) &#123;</span><br><span class="line">    stack[top++] = pivok + <span class="number">1</span>;</span><br><span class="line">    stack[top++] = end;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">while</span>(top &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    end = stack[--top];</span><br><span class="line">    start = stack[--top];</span><br><span class="line">    pivok = Partition(arr, start, end);</span><br><span class="line">    <span class="keyword">if</span>(pivok &gt; start + <span class="number">1</span>) &#123;</span><br><span class="line">      stack[top++] = start;</span><br><span class="line">      stack[top++] = pivok - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(pivok &lt; end - <span class="number">1</span>) &#123;</span><br><span class="line">      stack[top++] = pivok + <span class="number">1</span>;</span><br><span class="line">      stack[top++] = end;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Partition</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pivokkey = arr[start];</span><br><span class="line">  <span class="keyword">while</span>(start &lt; end) &#123;</span><br><span class="line">    <span class="keyword">while</span>((start &lt; end) &amp;&amp; (arr[end] &gt;= pivokkey)) &#123;</span><br><span class="line">      end--;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr, start, end);</span><br><span class="line">    <span class="keyword">while</span>((start &lt; end) &amp;&amp; (arr[start] &lt;= pivokkey)) &#123;</span><br><span class="line">      start++;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr, start, end);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> start;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最优时间复杂度：O（$n\log_2 n$）</p>
+<p>最坏时间复杂度：O（<strong>$n^2$</strong>）</p>
+<p>平均时间复杂度：O（$n\log_2 n$）</p>
+<p>空间复杂度：O（n）</p>
+<p>稳定性：不稳定</p>
+<h2 id="php的数据类型和数据类型内核如何实现"><a href="#php的数据类型和数据类型内核如何实现" class="headerlink" title="php的数据类型和数据类型内核如何实现"></a>php的数据类型和数据类型内核如何实现</h2><ul>
+<li><p>基本数据类型</p>
+<ul>
+<li>boolean</li>
+<li>string</li>
+<li>integer</li>
+<li>double</li>
+</ul>
+</li>
+<li><p>复合数据类型</p>
+<ul>
+<li>Array</li>
+<li>Object</li>
+</ul>
+</li>
+<li><p>特殊数据类型</p>
+<ul>
+<li>resource（资源）</li>
+<li>null</li>
+</ul>
+<p>zval结构体</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">zval_struct</span> &#123;</span></span><br><span class="line">    zend_value        value;            <span class="comment">/* value */</span></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">            ZEND_ENDIAN_LOHI_4(</span><br><span class="line">                zend_uchar    type,         <span class="comment">/* active type */</span></span><br><span class="line">                zend_uchar    type_flags,</span><br><span class="line">                zend_uchar    const_flags,</span><br><span class="line">                zend_uchar    reserved)     <span class="comment">/* call info for EX(This) */</span></span><br><span class="line">        &#125; v;</span><br><span class="line">        <span class="keyword">uint32_t</span> type_info;</span><br><span class="line">    &#125; u1;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">uint32_t</span>     var_flags;</span><br><span class="line">        <span class="keyword">uint32_t</span>     next;                 <span class="comment">/* hash collision chain */</span></span><br><span class="line">        <span class="keyword">uint32_t</span>     cache_slot;           <span class="comment">/* literal cache slot */</span></span><br><span class="line">        <span class="keyword">uint32_t</span>     lineno;               <span class="comment">/* line number (for ast nodes) */</span></span><br><span class="line">        <span class="keyword">uint32_t</span>     num_args;             <span class="comment">/* arguments number for EX(This) */</span></span><br><span class="line">        <span class="keyword">uint32_t</span>     fe_pos;               <span class="comment">/* foreach position */</span></span><br><span class="line">        <span class="keyword">uint32_t</span>     fe_iter_idx;          <span class="comment">/* foreach iterator index */</span></span><br><span class="line">    &#125; u2;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>变量的值：</p>
+<p>value存储的是变量的值。这个成员是zend_value类型的，zend_value定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">union</span> _zend_value &#123;</span><br><span class="line">    zend_long         lval;             <span class="comment">/* long value */</span></span><br><span class="line">    <span class="keyword">double</span>            dval;             <span class="comment">/* double value */</span></span><br><span class="line">    zend_refcounted  *counted;</span><br><span class="line">    zend_string      *str;</span><br><span class="line">    zend_array       *arr;</span><br><span class="line">    zend_object      *obj;</span><br><span class="line">    zend_resource    *res;</span><br><span class="line">    zend_reference   *ref;</span><br><span class="line">    zend_ast_ref     *ast;</span><br><span class="line">    zval             *zv;</span><br><span class="line">    <span class="keyword">void</span>             *ptr;</span><br><span class="line">    zend_class_entry *ce;</span><br><span class="line">    zend_function    *func;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">        <span class="keyword">uint32_t</span> w1;</span><br><span class="line">        <span class="keyword">uint32_t</span> w2;</span><br><span class="line">    &#125; ww;</span><br><span class="line">&#125; zend_value;</span><br></pre></td></tr></table></figure>
+<p>Zend_value是一个联合体，小于64位的简单类型直接存储值，对于复杂类型，存储的是指针。</p>
+<h2 id="PHP如何与nginx通信，通信方式有什么异同"><a href="#PHP如何与nginx通信，通信方式有什么异同" class="headerlink" title="PHP如何与nginx通信，通信方式有什么异同"></a>PHP如何与nginx通信，通信方式有什么异同</h2><ul>
+<li><p>CGI模式</p>
+<p>CGI是HTTP服务器与机器上的其他程序进行通信的一个接口。Webserver接受客户端的HTTP请求，然后建立进程执行CGI程序，客户端的请求被传递给CGI程序，CGI执行后结果再返回Webserver。</p>
+<p>局限性：每次一个请求都要创建一个新的CGI进程</p>
+</li>
+<li><p>FastCGI</p>
+<p>FastCGI是一个常驻型的CGI。</p>
+<ol>
+<li>Web Server 启动时载入FastCGI进程管理器</li>
+<li>FastCGI进程管理器自身初始化，启动多个CGI解释器进程</li>
+<li>FastCGI进程管理器选择并连接到一个CGI解释器</li>
+<li>FastCGI子进程接着等待并处理来自FastCGI进程管理器</li>
+</ol>
+</li>
+<li><p>Apache 模块</p>
+<p>MPM用于定义apache在响应多个用户请求时所工作的模型，有三种MPM模式：</p>
+<ol>
+<li>prefork（一个请求一个进程响应）</li>
+<li>worker（一个请求用一个线程响应，启动多个进程每个进程生成多个线程）</li>
+<li>event（一个进程处理多个请求）</li>
+</ol>
+<p>Worker特别多的线程采用keep-alive,会导致高并发场景下无可用线程；</p>
+<p>event使用了一个专门的线程来处理keep-alive类线程，较好的解决了上面的问题</p>
+</li>
+<li><p>Nginx</p>
+<p>nginx处理php文件，只有fastcgi模式，但是链接fastcgi的方式有2种：</p>
+<ol>
+<li>tcp</li>
+<li>Unix domain sockets</li>
+</ol>
+</li>
+</ul>
+<h2 id="PHP的运行模式"><a href="#PHP的运行模式" class="headerlink" title="PHP的运行模式"></a>PHP的运行模式</h2><p>1）CGI（通用网关接口/ Common Gateway Interface）<br> 2）FastCGI（常驻型CGI / Long-Live CGI）<br> 3）CLI（命令行运行 / Command Line Interface）<br> 4）Web模块模式（Apache等Web服务器运行的模式）<br> 5）ISAPI（Internet Server Application Program Interface）</p>
+<p>PS：在PHP5.3以后，PHP不再有ISAPI模式</p>
+<h2 id="PHP代码的执行流程"><a href="#PHP代码的执行流程" class="headerlink" title="PHP代码的执行流程"></a>PHP代码的执行流程</h2><ol>
+<li>Scanning(Lexing)，将php代码转换为语言片段(Tokens)</li>
+<li>Parsing，将Tokens转换成简单而有意义的表达式</li>
+<li>Compilation，将表达式编译成Opocdes</li>
+<li>Execution，顺次执行Opcodes，每次一条，从而实现php脚本的功能</li>
+</ol>
+<p><a href="http://blog.csdn.net/a2534725767/article/details/55194582" target="_blank" rel="noopener">http://blog.csdn.net/a2534725767/article/details/55194582</a></p>
+<h2 id="PHP和Glang的区别"><a href="#PHP和Glang的区别" class="headerlink" title="PHP和Glang的区别"></a>PHP和Glang的区别</h2><p>php</p>
+<p>优点：</p>
+<ol>
+<li>跨平台，性能优越</li>
+<li>语法简单，容易上手</li>
+<li>目前的主流技术都支持</li>
+<li>比较完整的支持和成熟的框架</li>
+</ol>
+<p>缺点：</p>
+<pre><code>1. 函数明明不规范，驼峰法和下划线，传参位置不一
+ 2. 单线程
+ 3. 核心异步网络不支持
+ 4. php解释机制使每个php页面被解释后，相关资源都会被回收
+</code></pre><p>go</p>
+<p>优点：</p>
+<ol>
+<li>go的垃圾回收机制比起c/c++全手动内存管理来说，更适合编程</li>
+<li>同步方式可以轻松实现高并发</li>
+<li>代码简洁，格式统一，阅读方便</li>
+<li>性能强尽且开发效率高</li>
+<li>可直接编译成机器码，不依赖其他库</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>孱弱的对象体系</li>
+<li>缺乏泛型和元编程能力</li>
+<li>工具链不成熟</li>
+</ol>
+<h2 id="深度优先遍历与广度优先遍历"><a href="#深度优先遍历与广度优先遍历" class="headerlink" title="深度优先遍历与广度优先遍历"></a>深度优先遍历与广度优先遍历</h2><p><a href="https://www.cnblogs.com/biyeymyhjob/archive/2012/07/18/2596983.html" target="_blank" rel="noopener">https://www.cnblogs.com/biyeymyhjob/archive/2012/07/18/2596983.html</a></p>
+<h2 id="解释三次握手和四次挥手"><a href="#解释三次握手和四次挥手" class="headerlink" title="解释三次握手和四次挥手"></a>解释三次握手和四次挥手</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p>第一次握手：建立连接时，客户端发送<code>SYN=j</code>到服务器，同时进入<code>SYN_SENT</code>状态，等待服务器的确认.</p>
+<p>第二次握手：服务器收到<code>SYN</code>包，必须确认客户的<code>SYN</code>，确认成功后向客户端发送含有<code>SYN=k;ack=j+1</code>，此时服务器进入<code>SYN_RECV</code>状态</p>
+<p>第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕后，客户端和服务器进入<code>ESTABLISHED</code>状态，完成三次握手。</p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>第一次挥手：客户端发出连接释放报文，并停止发送数据。释放数据报文首部，FIN=1，其序列号为<code>seq=u</code>，客户端进入<code>FIN-WAIT-1</code>状态</p>
+<p>第二次挥手：服务器收到连接释放报文，发出确认报文，发出确认报文，ACK=1，ack=u+1，并带上自己的序列号seq=v，此时服务端进入<code>CLOSE-WAIT</code>状态。这时客户端到服务器方向就释放了。</p>
+<p>客户端收到服务器确认请求后，此时客户端进入<code>FIN-WAIT-2</code>状态，等待服务器发送连接释放报文。</p>
+<p>第三次挥手：服务器向客户端发送连接释放报文，FIN=1，ack=u+1，序列号seq=w，此时服务器进入<code>LAST-ACK</code>状态，等待客户端确认</p>
+<p>第四次挥手：客户端收到服务器的连接释放报文后，发出确认，ACK=1，ack=w+1，序列号为seq=u+1，此时客户端就进入了<code>TIME_WAIT</code>状态。这时TCP连接还没有释放，必须经过2*MSL(最长报文段寿命)时间后，当客户端撤销相应的TCB后，才进入CLOSED状态。</p>
+<p>服务器只要收到了客户端发出的确认，立即进入CLOSED状态，同样撤销TCB后，就结束这次TCP连接。</p>
+<h2 id="为什么连接的时候是三次握手，关闭的时候确实四次挥手？"><a href="#为什么连接的时候是三次握手，关闭的时候确实四次挥手？" class="headerlink" title="为什么连接的时候是三次握手，关闭的时候确实四次挥手？"></a>为什么连接的时候是三次握手，关闭的时候确实四次挥手？</h2><p>当服务端收到客户端的SYN连接请求报文后，可以直接发送SYN+ACK报文，其中ACK报文是用来应答的，SYN是用来同步的。但是关闭连接时候，当服务端收到FIN报文，很可能不会立即关闭socket，所以只会先回复一个ack报文，所以需要四步挥手。</p>
+<h2 id="为什么TIME-WAIT状态需要经过2MSL才能返回CLOSE状态"><a href="#为什么TIME-WAIT状态需要经过2MSL才能返回CLOSE状态" class="headerlink" title="为什么TIME_WAIT状态需要经过2MSL才能返回CLOSE状态"></a>为什么TIME_WAIT状态需要经过2MSL才能返回CLOSE状态</h2><p>网络是不可靠的，有可以最后一个ACK丢失。所以TIME_WAIT状态就是用来重发可能丢失的ACK报文。在Client发送出最后的ACK回复，但该ACK可能丢失。Server如果没有收到ACK，将不断重复发送FIN片段。所以Client不能立即关闭，它必须确认Server接收到了该ACK。Client会在发送出ACK之后进入到TIME_WAIT状态。Client会设置一个计时器，等待2MSL的时间。如果在该时间内再次收到FIN，那么Client会重发ACK并再次等待2MSL</p>
+<h2 id="为什么不能用两次握手进行连接"><a href="#为什么不能用两次握手进行连接" class="headerlink" title="为什么不能用两次握手进行连接"></a>为什么不能用两次握手进行连接</h2><h2 id="如果已经建立了连接，但是客户端突然出现故障了怎么办？"><a href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？" class="headerlink" title="如果已经建立了连接，但是客户端突然出现故障了怎么办？"></a>如果已经建立了连接，但是客户端突然出现故障了怎么办？</h2><p>TCP设有一个保活计时器，服务器没收到一次客户端的请求后都会重新复位这个计时器，通常是两个小时，如果指定时间后没收到客户端的任何数据，服务器就发送一个探测报文段，以后每隔75秒发送一次，如果一连发送10个探测报文还没有反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
+<h2 id="TCP流量控制"><a href="#TCP流量控制" class="headerlink" title="TCP流量控制"></a>TCP流量控制</h2><h2 id="hash解决冲突的方法"><a href="#hash解决冲突的方法" class="headerlink" title="hash解决冲突的方法"></a>hash解决冲突的方法</h2><ul>
+<li>开放定址法</li>
+</ul>
+<p>$H_i$=(H(key) +$d_i$) MOD m i=1,2,3,…,s</p>
+<p>对增量<strong>$d_i$</strong>有三种取法：</p>
+<ul>
+<li><p>线性探测：$d_i$=1,2,3,4,…,m-1</p>
+</li>
+<li><p>平方探测：$1^2$,$-1^2$,$2^2$,$-2^2$,….,$k^2$,$-k^2$</p>
+</li>
+<li>随机探测：$d_i$是一组伪随机数列</li>
+</ul>
+<ul>
+<li>链地址法</li>
+</ul>
+<h2 id="指针和引用的区别"><a href="#指针和引用的区别" class="headerlink" title="指针和引用的区别"></a>指针和引用的区别</h2><ol>
+<li><p>指针是一个变量，只不过这个变量存储的是一个地址，指向内存中的一个存储单元；而引用和原来的变量实质上是同一个东西，只不过是原变量的一个别名而已。</p>
+</li>
+<li><p>指针可以有多级，但是引用只有一级</p>
+</li>
+<li>指针的值可以为空，但是引用的值不能为null，并且引用在定义的时候必须初始化</li>
+<li>指针的值可以在初始化后可以改变，即指向其他的存储单元，而引用在初始化后就不会改变了。</li>
+<li>“sizeof引用”得到的是所指向的变量大小，而”sizeof指针”得到的是指针本身的大小</li>
+<li>指针和引用的自增运算意义不一样</li>
+</ol>
+<h2 id="比较两棵树是否相同"><a href="#比较两棵树是否相同" class="headerlink" title="比较两棵树是否相同"></a>比较两棵树是否相同</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isSameTree</span><span class="params">(TreeNode node1, TreeNode node2)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(node1 == <span class="keyword">null</span> &amp;&amp; node2 == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(node1 == <span class="keyword">null</span> || node2 == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(node1 != <span class="keyword">null</span> &amp; node2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(node1.val != node2.val) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> isSameTree(node1.left, node2.left) &amp;&amp; isSameTree(node1.right, node2.right);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="反转字符串"><a href="#反转字符串" class="headerlink" title="反转字符串"></a>反转字符串</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverseString</span><span class="params">(<span class="keyword">char</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> len = arr.length;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len / <span class="number">2</span>; i++) &#123;</span><br><span class="line">    swap(arr, arr[i], arr[n - i - <span class="number">1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  String.valueOf(arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="内存对齐"><a href="#内存对齐" class="headerlink" title="内存对齐"></a>内存对齐</h2><p>一种提高内存访问速度的策略，cpu在访问未对其的内存需要经过两次内存访问，而经过内存对齐一次就可以了。</p>
+<p>数据类型长度和数据成员对齐：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char 1</span><br><span class="line">short 2</span><br><span class="line">int 4</span><br><span class="line">long 64bit 8 32bit 4</span><br><span class="line">double 8</span><br><span class="line">* 64bit 8 32bit 4</span><br></pre></td></tr></table></figure>
+<p>对齐规则：</p>
+<ul>
+<li><p><strong>原则一:存放的首地址偏移量 %  min(当前类型大小,对齐系数) == 0</strong></p>
+</li>
+<li><p>结构体整体对齐，也称作二次对齐，结构体整体大小 % min(当前类型最大的大小，对齐系数) == 0</p>
+</li>
+</ul>
+<h2 id="最长上升子序列"><a href="#最长上升子序列" class="headerlink" title="最长上升子序列"></a>最长上升子序列</h2><blockquote>
+<p>一个数列ai如果满足条件a1 &lt; a2 &lt; … &lt; aN，那么它是一个有序的上升数列。我们取数列(a1, a2, …, aN)的任一子序列(ai1, ai2, …, aiK)使得1 &lt;= i1 &lt; i2&lt; … &lt; iK &lt;= N。例如，数列(1, 7, 3, 5, 9, 4, 8)的有序上升子序列，像(1, 7)， (3, 4, 8)和许多其他的子序列。在所有的子序列中，最长的上升子序列的长度是4，如(1, 3, 5, 8)。现在你要写一个程序，从给出的数列中找到它的最长上升子序列。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">maxLongSubSeq</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span> [arr.length];</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    dp[i] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(arr[i] &gt; arr[j] &amp;&amp; dp[j] + <span class="number">1</span> &gt; dp[i]) &#123;</span><br><span class="line">        dp[i] = dp[j] + <span class="number">1</span>;</span><br><span class="line">      &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    result = Math.max(result, dp[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="PHP在内存中的分配（堆和栈的区别）"><a href="#PHP在内存中的分配（堆和栈的区别）" class="headerlink" title="PHP在内存中的分配（堆和栈的区别）"></a>PHP在内存中的分配（堆和栈的区别）</h2><ul>
+<li><p>初始化静态常量段</p>
+<p>存放程序中以初始化且不为0的全局变量。如静态变量和常量</p>
+</li>
+<li><p>代码段</p>
+<p>存放程序执行代码的一块内存区域，比如函数和方法</p>
+</li>
+<li><p>栈空间段</p>
+<p>存储占用相同空间长度并且占用空间小的数据类型的地方，存储的都是局部变量。栈中变量可以手动释放，</p>
+</li>
+<li><p>堆内存段</p>
+<p>在堆内存中是不可以直接存取的内存，存储的是数组和对象，堆不会随时释放，但是会被当成垃圾，最后铜鼓后垃圾回收机制去实现垃圾回收</p>
+</li>
+</ul>
+<h2 id="PHP的内存分配理解"><a href="#PHP的内存分配理解" class="headerlink" title="PHP的内存分配理解"></a>PHP的内存分配理解</h2><p>PHP脚本使用新的内存时，会向OS申请一大块内存（ZEND_MM_SEG_SIZE=256K），然后分配给你需要的一块小内存。</p>
+<p>当释放这块小内存，php不会返还给OS，而是<code>保留下来给后续处理使用</code>。如果存在后续逻辑请求内存导致申请的大块内存已经分光，这时才会向OS申请一块新的内存。</p>
+<p>相关API：</p>
+<p><img src="https://images2015.cnblogs.com/blog/798267/201601/798267-20160125092645145-1991624700.png" alt="img"></p>
+<p>防止有内存泄露并尽可能快的释放所有内存是内存管理的重要组成部分。因为安全原因，在请求结束时，Zend引擎会释放所有由上面提到的API所分配的内存。</p>
+<h2 id="PHP数组的实现机制-Hash-Table"><a href="#PHP数组的实现机制-Hash-Table" class="headerlink" title="PHP数组的实现机制(Hash Table)"></a>PHP数组的实现机制(Hash Table)</h2><p>PHP的数组,关联数组,对象属性,函数表,符号表,等等都是用HashTable来做为容器的.</p>
+<p> PHP使用了一些机制, 使得可以在O(1)的时间复杂度下实现数组的增删, 并同时支持线性遍历和随机访问.</p>
+<p>Hash Table采用<code>拉链法</code>解决冲突</p>
+<p>Hash Table结构定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">hashtable</span> &#123;</span></span><br><span class="line">uint nTableSize;        <span class="comment">/* 散列表大小, Hash值的区间 */</span></span><br><span class="line">uint nTableMask;        <span class="comment">/* 等于nTableSize -1, 用于快速定位 */</span></span><br><span class="line">uint nNumOfElements;    <span class="comment">/* HashTable中实际元素的个数 */</span></span><br><span class="line">ulong nNextFreeElement; <span class="comment">/* 下个空闲可用位置的数字索引 */</span></span><br><span class="line">Bucket *pInternalPointer;   <span class="comment">/* 内部位置指针, 会被reset, current这些遍历函数使用 */</span></span><br><span class="line">Bucket *pListHead;      <span class="comment">/* 头元素, 用于线性遍历 */</span></span><br><span class="line">Bucket *pListTail;      <span class="comment">/* 尾元素, 用于线性遍历 */</span></span><br><span class="line">Bucket **arBuckets;     <span class="comment">/* 实际的存储容器 */</span></span><br><span class="line"><span class="keyword">dtor_func_t</span> pDestructor;<span class="comment">/* 元素的析构函数(指针) */</span></span><br><span class="line">zend_bool persistent;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> nApplyCount; <span class="comment">/* 循环遍历保护 */</span></span><br><span class="line">zend_bool bApplyProtection;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> ZEND_DEBUG</span></span><br><span class="line"><span class="keyword">int</span> inconsistent;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125; HashTable;</span><br></pre></td></tr></table></figure>
+<p>对于Hash Table来说，其关键元素是<code>arBuckets</code>，这是实际存储的容器，结构定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">bucket</span> &#123;</span></span><br><span class="line">ulong h;                        <span class="comment">/* 数字索引/hash值 */</span></span><br><span class="line">uint nKeyLength;                <span class="comment">/* 字符索引的长度 */</span></span><br><span class="line"><span class="keyword">void</span> *pData;                    <span class="comment">/* 数据 */</span></span><br><span class="line"><span class="keyword">void</span> *pDataPtr;                 <span class="comment">/* 数据指针 */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bucket</span> *<span class="title">pListNext</span>;</span>               <span class="comment">/* 下一个元素, 用于线性遍历 */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bucket</span> *<span class="title">pListLast</span>;</span>       <span class="comment">/* 上一个元素, 用于线性遍历 */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bucket</span> *<span class="title">pNext</span>;</span>                   <span class="comment">/* 处于同一个拉链中的下一个元素 */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bucket</span> *<span class="title">pLast</span>;</span>                   <span class="comment">/* 处于同一拉链中的上一个元素 */</span></span><br><span class="line"><span class="keyword">char</span> arKey[<span class="number">1</span>]; <span class="comment">/* 节省内存,方便初始化的技巧 */</span></span><br><span class="line">&#125; Bucket;</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树的深度和统计二叉树的叶子节点个数"><a href="#二叉树的深度和统计二叉树的叶子节点个数" class="headerlink" title="二叉树的深度和统计二叉树的叶子节点个数"></a>二叉树的深度和统计二叉树的叶子节点个数</h2><p>求二叉树深度：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">biTreeDepth</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(node != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> l = biTreeDepth(node.left);</span><br><span class="line">    <span class="keyword">int</span> r = biTreeDepth(node.right);</span><br><span class="line">    <span class="keyword">return</span> l &gt; r ? l + <span class="number">1</span> : r + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>统计二叉树的叶节点个数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">biTreeNodeCount</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(node != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> l = biTreeNodeCount(node.left);</span><br><span class="line">    <span class="keyword">int</span> r = biTreeNodeCount(node.right);</span><br><span class="line">    <span class="keyword">return</span> (l == <span class="number">0</span> &amp;&amp; r == <span class="number">0</span>) <span class="number">1</span> : l+ r;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="滑动窗口的最大值"><a href="#滑动窗口的最大值" class="headerlink" title="滑动窗口的最大值"></a>滑动窗口的最大值</h2><p>方法一：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">maxInWindows</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">  ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">  <span class="keyword">if</span>(arr == <span class="keyword">null</span> || arr.length == <span class="number">0</span> || size &lt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(size &gt;= arr.length) &#123;</span><br><span class="line">    <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(arr[i] &gt; max) &#123;</span><br><span class="line">        max = arr[i];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    list.add(max);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = size - <span class="number">1</span>, max = Integer.MIN_VALUE;</span><br><span class="line">    <span class="keyword">while</span>(j &lt; arr.length) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> r = i; r &lt;= j; r++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[r] &gt; max) &#123;</span><br><span class="line">          max = arr[r];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      list.add(max);</span><br><span class="line">      max = Integer.MIN_VALUE;</span><br><span class="line">      i++;</span><br><span class="line">      j++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树的非递归遍历"><a href="#二叉树的非递归遍历" class="headerlink" title="二叉树的非递归遍历"></a>二叉树的非递归遍历</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">int</span> val;</span><br><span class="line">  <span class="keyword">public</span> Node left;</span><br><span class="line">  <span class="keyword">public</span> Node right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先序遍历</p>
+<ul>
+<li><p>先将根结点加入栈</p>
+</li>
+<li><p>访问根结点</p>
+</li>
+<li><p>如果根结点存在<code>右孩子</code>，将右孩子加入栈中</p>
+</li>
+<li><p>如果根结点存在<code>左孩子</code>，将左孩子加入栈中</p>
+</li>
+<li><p>重复上面</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(Node root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  Node temp = root;</span><br><span class="line">  Stack&lt;Node&gt; stack = <span class="keyword">new</span> Stack&lt;Node&gt;();</span><br><span class="line">  stack.push(root);</span><br><span class="line">  <span class="keyword">while</span>(!stack.isEmpty()) &#123;</span><br><span class="line">    Node p = stack.pop();</span><br><span class="line">    System.out.println(p.val);</span><br><span class="line">    <span class="keyword">if</span>(p.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">      stack.push(p.right);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(p.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">      stack.push(p.left);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>中序遍历</p>
+<ol>
+<li><p>现将根结点加入栈中</p>
+</li>
+<li><p>将当前节点的所有左孩子入栈，直到左孩子为空</p>
+</li>
+<li><p>访问栈顶元素，如果栈顶元素存在右孩子，则继续执行第二步</p>
+</li>
+<li><p>重复2，3步，直到栈为空且所有节点都被访问</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(Node root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  Node temp = root;</span><br><span class="line">  Stack&lt;Node&gt; stack = <span class="keyword">new</span> Stack&lt;Node&gt;();</span><br><span class="line">  <span class="keyword">while</span>(temp != <span class="keyword">null</span> || !stack.isEmpty()) &#123;</span><br><span class="line">    <span class="keyword">while</span>(temp != <span class="keyword">null</span>) &#123;</span><br><span class="line">      stack.push(temp);</span><br><span class="line">      temp = temp.left;</span><br><span class="line">    &#125;</span><br><span class="line">    temp = stack.pop();</span><br><span class="line">    System.out.println(temp.val);</span><br><span class="line">    <span class="comment">//如果栈顶元素存在右孩子，则将右孩子赋值给tmp，也就是将右孩子入栈</span></span><br><span class="line">    <span class="keyword">if</span>(temp.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">      temp = temp.right;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//否则，将tmp置为null，表示下次要访问的是栈顶元素</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      temp = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后序列遍历</p>
+<ul>
+<li><p>根结点入栈</p>
+</li>
+<li><p>将根结点的<code>左子树</code>入栈，直到没有左子树为止</p>
+</li>
+<li><p>得到栈顶元素值，先不访问，判断栈顶元素是否存在右孩子，如果存在并且没有访问，则将右孩子入栈；否则就访问栈顶元素</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">postOrder</span><span class="params">(Node root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  Node temp = root;</span><br><span class="line">  Node prev = <span class="keyword">null</span>;</span><br><span class="line">  Stack&lt;Node&gt; stack = <span class="keyword">new</span> Stack&lt;Node&gt;();</span><br><span class="line">  <span class="keyword">while</span>(temp != <span class="keyword">null</span> || !stack.isEmpty()) &#123;</span><br><span class="line">    <span class="keyword">while</span>(temp != <span class="keyword">null</span>) &#123;</span><br><span class="line">      stack.push(temp);</span><br><span class="line">      temp = temp.left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!stack.isEmpty()) &#123;</span><br><span class="line">      temp = stack.peek();</span><br><span class="line">      <span class="comment">//没有右孩子，或者右孩子已经被访问过</span></span><br><span class="line">      <span class="keyword">if</span>(temp.right == <span class="keyword">null</span> || temp.right == prev) &#123;</span><br><span class="line">        temp = stack.pop();</span><br><span class="line">        System.out.println(temp.val);</span><br><span class="line">        prev = temp;</span><br><span class="line">        temp = <span class="keyword">null</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//存在没有被访问的右孩子</span></span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">        temp = temp.right;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+
+
+      </div>
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/my_weixin_gongzhonghao.jpg" alt="如是说 wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/13/今日份检查/" rel="next" title="今日份检查">
+                <i class="fa fa-chevron-left"></i> 今日份检查
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/28822332.png" alt="如是说">
+            
+              <p class="site-author-name" itemprop="name">如是说</p>
+              <p class="site-description motion-element" itemprop="description">Simple is the best</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/2686685661" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ru-shi-shuo-25-54/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/ca47f67c49c3" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lishanleilixin" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mrzhouxiaofei.com/archives/" title="潜心做事的博客" target="_blank">潜心做事的博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的排序算法"><span class="nav-number">1.</span> <span class="nav-text">常见的排序算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php的数据类型和数据类型内核如何实现"><span class="nav-number">2.</span> <span class="nav-text">php的数据类型和数据类型内核如何实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP如何与nginx通信，通信方式有什么异同"><span class="nav-number">3.</span> <span class="nav-text">PHP如何与nginx通信，通信方式有什么异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的运行模式"><span class="nav-number">4.</span> <span class="nav-text">PHP的运行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP代码的执行流程"><span class="nav-number">5.</span> <span class="nav-text">PHP代码的执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP和Glang的区别"><span class="nav-number">6.</span> <span class="nav-text">PHP和Glang的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度优先遍历与广度优先遍历"><span class="nav-number">7.</span> <span class="nav-text">深度优先遍历与广度优先遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释三次握手和四次挥手"><span class="nav-number">8.</span> <span class="nav-text">解释三次握手和四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三次握手"><span class="nav-number">8.1.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四次挥手"><span class="nav-number">8.2.</span> <span class="nav-text">四次挥手</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么连接的时候是三次握手，关闭的时候确实四次挥手？"><span class="nav-number">9.</span> <span class="nav-text">为什么连接的时候是三次握手，关闭的时候确实四次挥手？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么TIME-WAIT状态需要经过2MSL才能返回CLOSE状态"><span class="nav-number">10.</span> <span class="nav-text">为什么TIME_WAIT状态需要经过2MSL才能返回CLOSE状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不能用两次握手进行连接"><span class="nav-number">11.</span> <span class="nav-text">为什么不能用两次握手进行连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？"><span class="nav-number">12.</span> <span class="nav-text">如果已经建立了连接，但是客户端突然出现故障了怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP流量控制"><span class="nav-number">13.</span> <span class="nav-text">TCP流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash解决冲突的方法"><span class="nav-number">14.</span> <span class="nav-text">hash解决冲突的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针和引用的区别"><span class="nav-number">15.</span> <span class="nav-text">指针和引用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较两棵树是否相同"><span class="nav-number">16.</span> <span class="nav-text">比较两棵树是否相同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反转字符串"><span class="nav-number">17.</span> <span class="nav-text">反转字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存对齐"><span class="nav-number">18.</span> <span class="nav-text">内存对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最长上升子序列"><span class="nav-number">19.</span> <span class="nav-text">最长上升子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP在内存中的分配（堆和栈的区别）"><span class="nav-number">20.</span> <span class="nav-text">PHP在内存中的分配（堆和栈的区别）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的内存分配理解"><span class="nav-number">21.</span> <span class="nav-text">PHP的内存分配理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP数组的实现机制-Hash-Table"><span class="nav-number">22.</span> <span class="nav-text">PHP数组的实现机制(Hash Table)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的深度和统计二叉树的叶子节点个数"><span class="nav-number">23.</span> <span class="nav-text">二叉树的深度和统计二叉树的叶子节点个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑动窗口的最大值"><span class="nav-number">24.</span> <span class="nav-text">滑动窗口的最大值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的非递归遍历"><span class="nav-number">25.</span> <span class="nav-text">二叉树的非递归遍历</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">如是说</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问总量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyu7jHI66';
+      var conf = '371d7822dc6f2fe9a3522aa186267067';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"left","hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"tagMode":false});</script></body>
+</html>
