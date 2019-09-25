@@ -97,7 +97,8 @@
 <meta property="og:description" content="[TOC] 常见的排序算法冒泡排序  两两比较相邻记录的关键字，如果是反序则交换，直到没有反序的记录位置  1234567891011121314151617public static void bubbleSort(int[] arr) &amp;#123;  boolean flag = true;  for(int i = 1; i &amp;lt; arr.length; i ++) &amp;#123;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/798267/201601/798267-20160125092645145-1991624700.png">
-<meta property="og:updated_time" content="2019-09-22T04:43:35.322Z">
+<meta property="og:image" content="https://img-my.csdn.net/uploads/201209/20/1348147255_8277.png">
+<meta property="og:updated_time" content="2019-09-25T14:48:47.293Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++和PHP的面试题总结">
 <meta name="twitter:description" content="[TOC] 常见的排序算法冒泡排序  两两比较相邻记录的关键字，如果是反序则交换，直到没有反序的记录位置  1234567891011121314151617public static void bubbleSort(int[] arr) &amp;#123;  boolean flag = true;  for(int i = 1; i &amp;lt; arr.length; i ++) &amp;#123;">
@@ -361,8 +362,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-09-22T12:43:35+08:00">
-                2019-09-22
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-25T22:48:47+08:00">
+                2019-09-25
               </time>
             
           </span>
@@ -638,11 +639,16 @@
 <h2 id="比较两棵树是否相同"><a href="#比较两棵树是否相同" class="headerlink" title="比较两棵树是否相同"></a>比较两棵树是否相同</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isSameTree</span><span class="params">(TreeNode node1, TreeNode node2)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(node1 == <span class="keyword">null</span> &amp;&amp; node2 == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(node1 == <span class="keyword">null</span> || node2 == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(node1 != <span class="keyword">null</span> &amp; node2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(node1.val != node2.val) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> isSameTree(node1.left, node2.left) &amp;&amp; isSameTree(node1.right, node2.right);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="反转字符串"><a href="#反转字符串" class="headerlink" title="反转字符串"></a>反转字符串</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverseString</span><span class="params">(<span class="keyword">char</span>[] arr)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> len = arr.length;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len / <span class="number">2</span>; i++) &#123;</span><br><span class="line">    swap(arr, arr[i], arr[n - i - <span class="number">1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  String.valueOf(arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="内存对齐"><a href="#内存对齐" class="headerlink" title="内存对齐"></a>内存对齐</h2><p>一种提高内存访问速度的策略，cpu在访问未对其的内存需要经过两次内存访问，而经过内存对齐一次就可以了。</p>
+<ul>
+<li>自身对齐值：数据类型本身的对齐值</li>
+<li>指定对齐值：编译器或开发者指定的对齐值，如32位单片机的指定对齐值默认是4</li>
+<li>有效对齐值：自身对齐值和指定对齐值中较小的那个</li>
+</ul>
 <p>数据类型长度和数据成员对齐：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char 1</span><br><span class="line">short 2</span><br><span class="line">int 4</span><br><span class="line">long 64bit 8 32bit 4</span><br><span class="line">double 8</span><br><span class="line">* 64bit 8 32bit 4</span><br></pre></td></tr></table></figure>
 <p>对齐规则：</p>
 <ul>
-<li><p><strong>原则一:存放的首地址偏移量 %  min(当前类型大小,对齐系数) == 0</strong></p>
+<li><p>原则一:存放的首地址偏移量 %  min(当前类型大小,对齐系数) == 0</p>
 </li>
 <li><p>结构体整体对齐，也称作二次对齐，结构体整体大小 % min(当前类型最大的大小，对齐系数) == 0</p>
 </li>
@@ -750,6 +756,53 @@
 <li>遍历出蓝色节点，真正删除</li>
 </ol>
 <h2 id="给定一个字符串，找出其中不含有重复字符的-最长子串-的长度"><a href="#给定一个字符串，找出其中不含有重复字符的-最长子串-的长度" class="headerlink" title="给定一个字符串，找出其中不含有重复字符的 最长子串 的长度"></a>给定一个字符串，找出其中不含有重复字符的 最长子串 的长度</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">lengthOfSubstring</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> resLength = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> strLength = str.length();</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">  Hash&lt;String&gt; set = <span class="keyword">new</span> Hash&lt;String&gt;();</span><br><span class="line">  <span class="keyword">while</span>(i &lt; strLength &amp;&amp; j &lt; strLength) &#123;</span><br><span class="line">    String resstr = str.substring(j, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span>(!set.contains(resstr)) &#123;</span><br><span class="line">      set.add(resstr);</span><br><span class="line">      j++;</span><br><span class="line">      resLength = Math.max(resLength, j - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      String istr = str.substring(i, <span class="number">1</span>);</span><br><span class="line">      set.remove(istr);</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> resLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进程的调度算法、算法流程、优缺点</p>
+<ul>
+<li><p>先来先服务算法</p>
+<p>可用于作业/进程调度。当在作业调度中，每次调度从后备作业队列中选择一个或多个最先进入该队列的作业分配资源；在进程调度中采用FCFS算法时，则每次调度是从就绪队列中选择一个最先进入该队列的进程，为之分配处理机，使之投入运行。</p>
+<p>平均等待时间：(0 + 24 + 27) / 3 = 17毫秒</p>
+<p>特点：非抢占</p>
+</li>
+<li><p>优先级调度算法</p>
+<p>每个进程关联一个优先级，cpu非赔给最高优先级的进程，相同优先级的进程按照先来先服务原则。</p>
+<p>需要考虑<code>饥饿现象</code>，可以抢占或非抢占</p>
+</li>
+<li><p>短作业优先调度算法</p>
+<p>从就绪队列中选出下一个<code>CPU执行期最短</code>的进程，是优先级调度的特例</p>
+<p>是<code>最优的进程调度算法</code>，但是难以预期进程的执行时间，可以通过历史数据进行预测：</p>
+<p><img src="https://img-my.csdn.net/uploads/201209/20/1348147255_8277.png" alt="img"></p>
+</li>
+<li><p>时间片轮转算法</p>
+<p>可用于<code>分时系统</code>中</p>
+<p>所有就绪进程按FIFO规则进行排列，按一定的时间间隔把处理机分配给队列中的进程。</p>
+</li>
+<li><p>最高响应比优先算法</p>
+<ul>
+<li><p>如果作业的等待时间相同，则要求服务的时间越短其优先权越高，<code>利于短作业</code></p>
+</li>
+<li><p>当要求服务时间相同，优先权取决于等待时间，等待时间越长其优先权越高，实现的是<code>先来先服务</code></p>
+</li>
+<li><p>对于长作业，作业优先级随等待时间增加提高</p>
+</li>
+<li><p>该算法照顾了短作业,且不会使长作业长期得不到服务</p>
+</li>
+</ul>
+</li>
+<li><p>反馈算法</p>
+<p>调度基于被抢占原则（按时间片）并使用动态优先级机制。当一个进程第一次进入系统中时，他被放置在一个优先级队列中，当第一次被抢占后并返回就绪状态时，它被放置在下一个低优先级队列中，在随后的时间里，每当被抢占时，他被降级到下一个低优先级队列中。一个短进程很快被执行完，不会在就绪队列中降很多级，一个长进程会逐渐降级。因此先到的进程和短进程优先于长进程和老进程。在每个队列中，除了优先级在最低的队列中之外，都是用简单的先来先去服务机制，一旦一个进程处于优先级最低的队列中，它就不可能在降级，但会重复的返回该队列，直到运行结束。因此，该队列课按照轮转方式调度。</p>
+</li>
+<li><p>最短剩余时间优先算法</p>
+</li>
+<li><p>最短进程优先算法</p>
+</li>
+<li><p>多级反馈队列调度算法</p>
+<p>多级反馈队列算法，不必事先知道各种进程所需要执行的时间，他是当前被公认的一种较好的进程调度算法。其实施过程如下：</p>
+<p>​    1)设置多个就绪队列，并为各个队列赋予不同的优先级。在优先权越高的队列中，为每个进程所规定的执行时间片就越小。</p>
+<p>　　2)当一个新进程进入内存后，首先放入第一队列的末尾，按照先来先去原则排队等候调度。如果他能在一个时间片中完成，便可撤离；如果未完成，就转入第二队列的末尾，同样等待调度…..如此下去，当一个长作业（进程）从第一队列依次将到第n队列（最后队列）后，便按第n队列时间片轮转运行。</p>
+<p>　　3)仅当第一队列空闲的时候，调度程序才调度第二队列中的进程运行；仅当第1到（i-1）队列空时，才会调度第i队列中的进程运行，并执行相应的时间片轮转。</p>
+<p>　　4)如果处理机正在处理第i队列中某进程，又有新进程进入优先权较高的队列，则此新队列抢占正在运行的处理机，并把正在运行的进程放在第i队列的队尾。</p>
+</li>
+</ul>
 
       
     </div>
