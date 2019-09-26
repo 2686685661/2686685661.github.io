@@ -98,7 +98,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/798267/201601/798267-20160125092645145-1991624700.png">
 <meta property="og:image" content="https://img-my.csdn.net/uploads/201209/20/1348147255_8277.png">
-<meta property="og:updated_time" content="2019-09-25T14:48:47.293Z">
+<meta property="og:updated_time" content="2019-09-26T05:14:18.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++和PHP的面试题总结">
 <meta name="twitter:description" content="[TOC] 常见的排序算法冒泡排序  两两比较相邻记录的关键字，如果是反序则交换，直到没有反序的记录位置  1234567891011121314151617public static void bubbleSort(int[] arr) &amp;#123;  boolean flag = true;  for(int i = 1; i &amp;lt; arr.length; i ++) &amp;#123;">
@@ -362,8 +362,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-09-25T22:48:47+08:00">
-                2019-09-25
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-26T13:14:18+08:00">
+                2019-09-26
               </time>
             
           </span>
@@ -756,8 +756,7 @@
 <li>遍历出蓝色节点，真正删除</li>
 </ol>
 <h2 id="给定一个字符串，找出其中不含有重复字符的-最长子串-的长度"><a href="#给定一个字符串，找出其中不含有重复字符的-最长子串-的长度" class="headerlink" title="给定一个字符串，找出其中不含有重复字符的 最长子串 的长度"></a>给定一个字符串，找出其中不含有重复字符的 最长子串 的长度</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">lengthOfSubstring</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> resLength = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> strLength = str.length();</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">  Hash&lt;String&gt; set = <span class="keyword">new</span> Hash&lt;String&gt;();</span><br><span class="line">  <span class="keyword">while</span>(i &lt; strLength &amp;&amp; j &lt; strLength) &#123;</span><br><span class="line">    String resstr = str.substring(j, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span>(!set.contains(resstr)) &#123;</span><br><span class="line">      set.add(resstr);</span><br><span class="line">      j++;</span><br><span class="line">      resLength = Math.max(resLength, j - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      String istr = str.substring(i, <span class="number">1</span>);</span><br><span class="line">      set.remove(istr);</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> resLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>进程的调度算法、算法流程、优缺点</p>
-<ul>
+<h2 id="进程的调度算法、算法流程、优缺点"><a href="#进程的调度算法、算法流程、优缺点" class="headerlink" title="进程的调度算法、算法流程、优缺点"></a>进程的调度算法、算法流程、优缺点</h2><ul>
 <li><p>先来先服务算法</p>
 <p>可用于作业/进程调度。当在作业调度中，每次调度从后备作业队列中选择一个或多个最先进入该队列的作业分配资源；在进程调度中采用FCFS算法时，则每次调度是从就绪队列中选择一个最先进入该队列的进程，为之分配处理机，使之投入运行。</p>
 <p>平均等待时间：(0 + 24 + 27) / 3 = 17毫秒</p>
@@ -801,6 +800,102 @@
 <p>　　2)当一个新进程进入内存后，首先放入第一队列的末尾，按照先来先去原则排队等候调度。如果他能在一个时间片中完成，便可撤离；如果未完成，就转入第二队列的末尾，同样等待调度…..如此下去，当一个长作业（进程）从第一队列依次将到第n队列（最后队列）后，便按第n队列时间片轮转运行。</p>
 <p>　　3)仅当第一队列空闲的时候，调度程序才调度第二队列中的进程运行；仅当第1到（i-1）队列空时，才会调度第i队列中的进程运行，并执行相应的时间片轮转。</p>
 <p>　　4)如果处理机正在处理第i队列中某进程，又有新进程进入优先权较高的队列，则此新队列抢占正在运行的处理机，并把正在运行的进程放在第i队列的队尾。</p>
+</li>
+</ul>
+<h2 id="redis六（七）大底层数据结构"><a href="#redis六（七）大底层数据结构" class="headerlink" title="redis六（七）大底层数据结构"></a>redis六（七）大底层数据结构</h2><h3 id="SDS"><a href="#SDS" class="headerlink" title="SDS"></a>SDS</h3><p>数据结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> len; <span class="comment">//记录buf数组中已使用的字节长度</span></span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">free</span>; <span class="comment">//记录buf数组中未使用字节的数量</span></span><br><span class="line">  <span class="keyword">char</span> buf[]; <span class="comment">//字节数组，用于保存字符串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SDS优势(和c的区别)</p>
+<ul>
+<li><p>常数复杂度获得字符串长度（<code>len</code>）</p>
+</li>
+<li><p>杜绝缓冲区溢出</p>
+</li>
+<li><p>减少修改字符串时带来的内存重分配次数</p>
+<ul>
+<li>空间预分配</li>
+<li>惰性空间释放（通过<code>free</code>记录）</li>
+</ul>
+</li>
+<li><p>二进制安全</p>
+</li>
+<li>兼容部分c字符串函数</li>
+</ul>
+<p>应用：key/value</p>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>数据结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">prev</span>;</span> <span class="comment">//前置节点</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">next</span>;</span> <span class="comment">//后置节点</span></span><br><span class="line">  <span class="keyword">void</span> *value <span class="comment">//节点值</span></span><br><span class="line">&#125;listNOde;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">list</span> &#123;</span></span><br><span class="line">  listNode *head; <span class="comment">//表头节点</span></span><br><span class="line">  listNode *tail; <span class="comment">//表尾节点</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> len; <span class="comment">//链表所包含的节点数量</span></span><br><span class="line">  <span class="keyword">void</span> *(*dup)(<span class="keyword">void</span> *ptr); <span class="comment">//节点值复制函数</span></span><br><span class="line">  <span class="keyword">void</span> (*<span class="built_in">free</span>)(<span class="keyword">void</span> *ptr);<span class="comment">//节点值释放函数</span></span><br><span class="line">  <span class="keyword">int</span> (*match)(<span class="keyword">void</span> *ptr, <span class="keyword">void</span> *key); <span class="comment">//节点值对比函数</span></span><br><span class="line">&#125;<span class="built_in">list</span></span><br></pre></td></tr></table></figure>
+<p>链表特性：</p>
+<ul>
+<li>双端</li>
+<li>无环</li>
+<li>带表头指针和表尾指针</li>
+<li>带链表长度计数器</li>
+<li>多态</li>
+</ul>
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><p>又称<code>符号表</code>，用于保存键值对的抽象数据结构</p>
+<p>字典使用哈希表作为底层实现</p>
+<p>哈希表：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">  dicEntry **table;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> size;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> used;</span><br><span class="line">&#125;dictht;</span><br></pre></td></tr></table></figure>
+<p>哈希表节点：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dicEntry</span> &#123;</span></span><br><span class="line">  <span class="keyword">void</span> *key;</span><br><span class="line">  <span class="keyword">union</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> *val;</span><br><span class="line">    uint64_tu64;</span><br><span class="line">    int64_ts64;</span><br><span class="line">  &#125;v;</span><br><span class="line">  </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dicEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>跳跃表</p>
+</li>
+<li><p>整数集合</p>
+</li>
+<li><p>压缩列表</p>
+</li>
+<li><p>（保留）对象</p>
+</li>
+</ol>
+<p>Linux日志处理</p>
+<p>常考的几种命令的组合：</p>
+<p>cat（<a href="https://www.cnblogs.com/zhangchenliang/p/7717602.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangchenliang/p/7717602.html</a>）</p>
+<p>tail</p>
+<p>grep</p>
+<p>ps</p>
+<p>awk（<a href="https://blog.csdn.net/jin970505/article/details/79056457" target="_blank" rel="noopener">https://blog.csdn.net/jin970505/article/details/79056457</a>）</p>
+<p>sort</p>
+<p>uniq</p>
+<h2 id="mysql主从复制"><a href="#mysql主从复制" class="headerlink" title="mysql主从复制"></a>mysql主从复制</h2><h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><ul>
+<li><p>读写分离</p>
+</li>
+<li><p>数据实时备份</p>
+</li>
+<li>高可用HA</li>
+<li>架构扩展</li>
+</ul>
+<h3 id="形式"><a href="#形式" class="headerlink" title="形式"></a>形式</h3><ul>
+<li><p>一主一从</p>
+</li>
+<li><p>一主多从</p>
+</li>
+<li><p>多主一从(5.7开始支持)</p>
+</li>
+<li><p>双主复制</p>
+<p>互作主从复制，每个服务器既是master，也是另一台的slave，任何一方做的变动，都会通过复制应用到另外一方数据库中</p>
+</li>
+<li><p>级联复制</p>
+</li>
+</ul>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>三个线程：</p>
+<ul>
+<li><p><code>log dump</code>线程运行在主节点</p>
+</li>
+<li><p><code>I/O</code> 线程，<code>SQL</code>线程运行在从节点</p>
+</li>
+</ul>
+<p><code>log dump</code>线程</p>
+<p>用于发送bin-log的内容，此线程在读取bin-log时对主节点上的bin-log加锁，读取完成后进行释放锁</p>
+<p><code>I/O</code>线程</p>
+<p>从节点执行复制指令（’start slave’）,<code>I/O</code>线程用于连接主节点，请求主库的bin-log，并保存在本地</p>
+<p><code>SQL</code>线程</p>
+<p>读取本地内容，解析具体操作并执行</p>
+<h3 id="复制模式"><a href="#复制模式" class="headerlink" title="复制模式"></a>复制模式</h3><ul>
+<li><p>异步模式</p>
+</li>
+<li><p>半同步模式</p>
+</li>
+<li><p>全同步模式</p>
 </li>
 </ul>
 
@@ -1042,7 +1137,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的排序算法"><span class="nav-number">1.</span> <span class="nav-text">常见的排序算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php的数据类型和数据类型内核如何实现"><span class="nav-number">2.</span> <span class="nav-text">php的数据类型和数据类型内核如何实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP如何与nginx通信，通信方式有什么异同"><span class="nav-number">3.</span> <span class="nav-text">PHP如何与nginx通信，通信方式有什么异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的运行模式"><span class="nav-number">4.</span> <span class="nav-text">PHP的运行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP代码的执行流程"><span class="nav-number">5.</span> <span class="nav-text">PHP代码的执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP和Glang的区别"><span class="nav-number">6.</span> <span class="nav-text">PHP和Glang的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度优先遍历与广度优先遍历"><span class="nav-number">7.</span> <span class="nav-text">深度优先遍历与广度优先遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释三次握手和四次挥手"><span class="nav-number">8.</span> <span class="nav-text">解释三次握手和四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三次握手"><span class="nav-number">8.1.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四次挥手"><span class="nav-number">8.2.</span> <span class="nav-text">四次挥手</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么连接的时候是三次握手，关闭的时候确实四次挥手？"><span class="nav-number">9.</span> <span class="nav-text">为什么连接的时候是三次握手，关闭的时候确实四次挥手？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么TIME-WAIT状态需要经过2MSL才能返回CLOSE状态"><span class="nav-number">10.</span> <span class="nav-text">为什么TIME_WAIT状态需要经过2MSL才能返回CLOSE状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不能用两次握手进行连接"><span class="nav-number">11.</span> <span class="nav-text">为什么不能用两次握手进行连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？"><span class="nav-number">12.</span> <span class="nav-text">如果已经建立了连接，但是客户端突然出现故障了怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP流量控制"><span class="nav-number">13.</span> <span class="nav-text">TCP流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash解决冲突的方法"><span class="nav-number">14.</span> <span class="nav-text">hash解决冲突的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针和引用的区别"><span class="nav-number">15.</span> <span class="nav-text">指针和引用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较两棵树是否相同"><span class="nav-number">16.</span> <span class="nav-text">比较两棵树是否相同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反转字符串"><span class="nav-number">17.</span> <span class="nav-text">反转字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存对齐"><span class="nav-number">18.</span> <span class="nav-text">内存对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最长上升子序列"><span class="nav-number">19.</span> <span class="nav-text">最长上升子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP在内存中的分配（堆和栈的区别）"><span class="nav-number">20.</span> <span class="nav-text">PHP在内存中的分配（堆和栈的区别）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的内存分配理解"><span class="nav-number">21.</span> <span class="nav-text">PHP的内存分配理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP数组的实现机制-Hash-Table"><span class="nav-number">22.</span> <span class="nav-text">PHP数组的实现机制(Hash Table)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的深度和统计二叉树的叶子节点个数"><span class="nav-number">23.</span> <span class="nav-text">二叉树的深度和统计二叉树的叶子节点个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑动窗口的最大值"><span class="nav-number">24.</span> <span class="nav-text">滑动窗口的最大值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的非递归遍历"><span class="nav-number">25.</span> <span class="nav-text">二叉树的非递归遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反转链表"><span class="nav-number">26.</span> <span class="nav-text">反转链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的垃圾回收机制"><span class="nav-number">27.</span> <span class="nav-text">PHP的垃圾回收机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给定一个字符串，找出其中不含有重复字符的-最长子串-的长度"><span class="nav-number">28.</span> <span class="nav-text">给定一个字符串，找出其中不含有重复字符的 最长子串 的长度</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的排序算法"><span class="nav-number">1.</span> <span class="nav-text">常见的排序算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php的数据类型和数据类型内核如何实现"><span class="nav-number">2.</span> <span class="nav-text">php的数据类型和数据类型内核如何实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP如何与nginx通信，通信方式有什么异同"><span class="nav-number">3.</span> <span class="nav-text">PHP如何与nginx通信，通信方式有什么异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的运行模式"><span class="nav-number">4.</span> <span class="nav-text">PHP的运行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP代码的执行流程"><span class="nav-number">5.</span> <span class="nav-text">PHP代码的执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP和Glang的区别"><span class="nav-number">6.</span> <span class="nav-text">PHP和Glang的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度优先遍历与广度优先遍历"><span class="nav-number">7.</span> <span class="nav-text">深度优先遍历与广度优先遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释三次握手和四次挥手"><span class="nav-number">8.</span> <span class="nav-text">解释三次握手和四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三次握手"><span class="nav-number">8.1.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四次挥手"><span class="nav-number">8.2.</span> <span class="nav-text">四次挥手</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么连接的时候是三次握手，关闭的时候确实四次挥手？"><span class="nav-number">9.</span> <span class="nav-text">为什么连接的时候是三次握手，关闭的时候确实四次挥手？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么TIME-WAIT状态需要经过2MSL才能返回CLOSE状态"><span class="nav-number">10.</span> <span class="nav-text">为什么TIME_WAIT状态需要经过2MSL才能返回CLOSE状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不能用两次握手进行连接"><span class="nav-number">11.</span> <span class="nav-text">为什么不能用两次握手进行连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？"><span class="nav-number">12.</span> <span class="nav-text">如果已经建立了连接，但是客户端突然出现故障了怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP流量控制"><span class="nav-number">13.</span> <span class="nav-text">TCP流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash解决冲突的方法"><span class="nav-number">14.</span> <span class="nav-text">hash解决冲突的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针和引用的区别"><span class="nav-number">15.</span> <span class="nav-text">指针和引用的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较两棵树是否相同"><span class="nav-number">16.</span> <span class="nav-text">比较两棵树是否相同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反转字符串"><span class="nav-number">17.</span> <span class="nav-text">反转字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存对齐"><span class="nav-number">18.</span> <span class="nav-text">内存对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最长上升子序列"><span class="nav-number">19.</span> <span class="nav-text">最长上升子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP在内存中的分配（堆和栈的区别）"><span class="nav-number">20.</span> <span class="nav-text">PHP在内存中的分配（堆和栈的区别）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的内存分配理解"><span class="nav-number">21.</span> <span class="nav-text">PHP的内存分配理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP数组的实现机制-Hash-Table"><span class="nav-number">22.</span> <span class="nav-text">PHP数组的实现机制(Hash Table)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的深度和统计二叉树的叶子节点个数"><span class="nav-number">23.</span> <span class="nav-text">二叉树的深度和统计二叉树的叶子节点个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑动窗口的最大值"><span class="nav-number">24.</span> <span class="nav-text">滑动窗口的最大值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的非递归遍历"><span class="nav-number">25.</span> <span class="nav-text">二叉树的非递归遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反转链表"><span class="nav-number">26.</span> <span class="nav-text">反转链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP的垃圾回收机制"><span class="nav-number">27.</span> <span class="nav-text">PHP的垃圾回收机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给定一个字符串，找出其中不含有重复字符的-最长子串-的长度"><span class="nav-number">28.</span> <span class="nav-text">给定一个字符串，找出其中不含有重复字符的 最长子串 的长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程的调度算法、算法流程、优缺点"><span class="nav-number">29.</span> <span class="nav-text">进程的调度算法、算法流程、优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis六（七）大底层数据结构"><span class="nav-number">30.</span> <span class="nav-text">redis六（七）大底层数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SDS"><span class="nav-number">30.1.</span> <span class="nav-text">SDS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表"><span class="nav-number">30.2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典"><span class="nav-number">30.3.</span> <span class="nav-text">字典</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql主从复制"><span class="nav-number">31.</span> <span class="nav-text">mysql主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用途"><span class="nav-number">31.1.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形式"><span class="nav-number">31.2.</span> <span class="nav-text">形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">31.3.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制模式"><span class="nav-number">31.4.</span> <span class="nav-text">复制模式</span></a></li></ol></li></ol></div>
             
 
           </div>
